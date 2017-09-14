@@ -1,0 +1,26 @@
+{
+  "name": "lektorprosjekt",
+  "version": "1.0.0",
+  "description": "UKA applikasjon",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorgensta/it1901-gruppe2.git"
+  },
+  "author": "Jørgen Stamnes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jorgensta/it1901-gruppe2/issues"
+  },
+  "homepage": "https://github.com/jorgensta/it1901-gruppe2#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "nedb": "^1.8.0"
+  }
+}
