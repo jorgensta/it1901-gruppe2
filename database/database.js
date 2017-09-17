@@ -1,7 +1,8 @@
 let Datastore = require('nedb'); //henter databasen
+let objectFactory = require('./objectfactory');
 
 //Lager en database for alle arbeidere som er lagret i /filer/arbeidere.db, denne lager ny fil hver gang
-let arbeidere = new Datastore( {filename: __dirname + "/filer/arbeidere.db", autoload: true});
+let arbeidere = new Datastore( {filename: __dirname + '/filer/arbeidere.db', autoload: true});
 
 // Lag en variabel = funksjon () som teller over antall objekt (Susanne)
 
@@ -10,20 +11,20 @@ let arbeidere = new Datastore( {filename: __dirname + "/filer/arbeidere.db", aut
 
 //prøveprosjekt på å kunne laste inn database uten å opprette ny
 let arbeidere = arbeidere.loadDatabase(function(err){
-  console.log("fikk tak i arbeidere");
+  console.log('fikk tak i arbeidere');
 });
 
 
-
+//eks. arbeider-objekt
 let scott = {
   navn: 'Scott',
   rolle: 'Manager',
-  id: '1'
+  id: 1
 };
 
 
-//objectfactory for å lage nye brukere (ULRIK)
-const createUser ({navn, rolle});
+//T0D0: legge nyArbeider inn i arbeidere.db
+let nyArbeider = objectfactory.nyArbeider("Ulrik", "lydtekniker");
 
 /*
 arbeidere.insert(scott, function(err,doc){
@@ -33,5 +34,5 @@ arbeidere.insert(scott, function(err,doc){
 
 
 arbeidere.findOne({id: '1'}, function(err,doc){
-  console.log("Found user by ID = 1, name: " , doc.navn);
+  console.log('Found user by ID = 1, name: ' , doc.navn);
 });
