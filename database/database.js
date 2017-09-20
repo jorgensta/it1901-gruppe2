@@ -22,9 +22,18 @@ arbeidere.find({}).sort({id: 1}).exec(function (err,docs){
     };
     console.log(d.navn);
   });
-  console.log(nowNumber);
   arbID = nowNumber;
   console.log(arbID);
+  incrementId();
+  console.log(arbID);
+
+});
+
+
+
+
+
+
 
 
 
@@ -34,32 +43,34 @@ function incrementId(){
 
 
 function getID(){
-  setTimeout(function(){
-    incrementId();
+  arbeidere.find({}).sort({id: 1}).exec(function (err,docs){
+    let nowNumber = 0;
+    docs.forEach(function(d){
+      if(d.id > nowNumber){
+        nowNumber = d.id;
+      };
+      console.log(d.navn);
+    });
+    arbID = nowNumber;
+    console.log(arbID);
     incrementId();
     console.log(arbID);
-  }, 1000);
+  });
+};
 
-=======
+getID();
+
+
 //eksempel på arbeider-objekt
 let scott = {
   navn: 'Scott',
   rolle: 'Manager',
-  id: '1';
->>>>>>> origin/Develop
+  id: '1'
 };
-
-getID();
 
 /*
 
 //modul fra objectfactory.js
 let nyArbeider = objectfactory.nyArbeider("Ulrik", "lydtekniker");
 console.log(nyArbeider);
-
-<<<<<<< HEAD
 */
-
-arbeidere.findOne({id: '1'}, function(err,doc){
-  console.log("Found user by ID = 1, name: " , doc.navn);
-});
