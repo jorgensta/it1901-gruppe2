@@ -26,19 +26,12 @@ arbeidere.find({}).sort({id: 1}).exec(function (err,docs){
   arbID = nowNumber;
   console.log(arbID);
 
-<<<<<<< HEAD
-=======
-//T0D0
-let arbeidere = arbeidere.loadDatabase(function(err){
-  console.log("fikk tak i arbeidere");
->>>>>>> origin/Develop
-});
+
 
 function incrementId(){
   arbID = parseInt(arbID) + 1;
 }
 
-<<<<<<< HEAD
 
 function getID(){
   setTimeout(function(){
@@ -58,11 +51,6 @@ let scott = {
 
 getID();
 
-
-
-
-
-
 /*
 
 //modul fra objectfactory.js
@@ -72,14 +60,6 @@ console.log(nyArbeider);
 <<<<<<< HEAD
 */
 
-=======
-//T0D0
-arbeidere.insert(scott, function(err,doc){
-  console.log("Inserted", doc.navn, "arbeiderID: " , doc._id);
-});
-
-//T0D0
->>>>>>> origin/Develop
 arbeidere.findOne({id: '1'}, function(err,doc){
   console.log("Found user by ID = 1, name: " , doc.navn);
 });
