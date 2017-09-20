@@ -1,4 +1,5 @@
 let Datastore = require('nedb'); //henter databasen
+let objectfactory = require('./objectfactory');
 
 //Lager en database for alle arbeidere som er lagret i /filer/arbeidere.db, denne IKKE ny fil hver gang
 let arbeidere = new Datastore( {filename: __dirname + "/filer/arbeidere.db", autoload: true});
@@ -25,12 +26,19 @@ arbeidere.find({}).sort({id: 1}).exec(function (err,docs){
   arbID = nowNumber;
   console.log(arbID);
 
+<<<<<<< HEAD
+=======
+//T0D0
+let arbeidere = arbeidere.loadDatabase(function(err){
+  console.log("fikk tak i arbeidere");
+>>>>>>> origin/Develop
 });
 
 function incrementId(){
   arbID = parseInt(arbID) + 1;
 }
 
+<<<<<<< HEAD
 
 function getID(){
   setTimeout(function(){
@@ -39,6 +47,13 @@ function getID(){
     console.log(arbID);
   }, 1000);
 
+=======
+//eksempel på arbeider-objekt
+let scott = {
+  navn: 'Scott',
+  rolle: 'Manager',
+  id: '1';
+>>>>>>> origin/Develop
 };
 
 getID();
@@ -50,11 +65,21 @@ getID();
 
 /*
 
-//objectfactory for å lage nye brukere (ULRIK)
-const createUser ({navn, rolle});
+//modul fra objectfactory.js
+let nyArbeider = objectfactory.nyArbeider("Ulrik", "lydtekniker");
+console.log(nyArbeider);
 
+<<<<<<< HEAD
 */
 
+=======
+//T0D0
+arbeidere.insert(scott, function(err,doc){
+  console.log("Inserted", doc.navn, "arbeiderID: " , doc._id);
+});
+
+//T0D0
+>>>>>>> origin/Develop
 arbeidere.findOne({id: '1'}, function(err,doc){
   console.log("Found user by ID = 1, name: " , doc.navn);
 });
