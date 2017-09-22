@@ -20,9 +20,10 @@
   },
   "homepage": "https://github.com/jorgensta/it1901-gruppe2#readme",
   "dependencies": {
-    "body-parser": "^1.18.1",
+    "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "lodash": "^4.17.4",
+    "logger": "0.0.1",
     "nedb": "^1.8.0",
     "passport": "^0.4.0"
   }
