@@ -33,10 +33,6 @@ arbeidere.find({}).sort({id: 1}).exec(function (err,docs){
 
 
 
-
-
-
-
 function incrementId(){
   arbID = parseInt(arbID) + 1;
 }
