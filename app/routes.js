@@ -10,14 +10,14 @@ module.exports = function(app,passport){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
 
-  app.get('/signup', function(req, res){
+  app.get('/tekniker', function(req, res){
     res.render('tekniker.ejs', {message: req.flash('Signup message')});
   });
 
   app.get('/arrangor', function(req,res){
     res.render('arrangor.ejs', {message: req.flash('arrangor')})
   });
-  
+
 
   app.get('/profile', isLoggedIn,  function(req,res){
     res.render('profile.ejs', {
@@ -25,6 +25,7 @@ module.exports = function(app,passport){
     });
 
   });
+  
   app.get('/logout', function (req,res){
     res.logout();
     res.redirect('/');
