@@ -18,6 +18,10 @@ module.exports = function(app,passport){
     res.render('arrangor.ejs', {message: req.flash('arrangor')})
   });
 
+  app.get('/signup', function(req,res){
+    res.render('signup.ejs', {message: req.flash('signup')});
+  });
+
 
   app.get('/profile', isLoggedIn,  function(req,res){
     res.render('profile.ejs', {
@@ -25,12 +29,13 @@ module.exports = function(app,passport){
     });
 
   });
-  
+
   app.get('/logout', function (req,res){
     res.logout();
     res.redirect('/');
 
   });
+
 };
 
 
