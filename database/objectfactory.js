@@ -11,8 +11,7 @@ const nyArbeider = (navn, rolle) => {
 	if (checkArbeiderNavn(navn) && checkArbeiderRolle(rolle)){
 			let arbeider = {
 			  navn: navn,
-			  rolle: rolle,
-			  id: 1						//T0D0: denne skal hente neste serielle ID fra arbeidere.db
+			  rolle: rolle
 			};
 			return arbeider
 	}
