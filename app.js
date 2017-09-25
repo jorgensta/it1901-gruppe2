@@ -51,7 +51,7 @@ passport.serializeUser(function(user,done){
 });
 
 
-passport.deseralizeUser(function(id, done){
+passport.deserializeUser(function(id, done){
   console.log("deseralizeUser: " + id);
   db.findOne({_id : id}, function(err,doc){
     if(doc){
