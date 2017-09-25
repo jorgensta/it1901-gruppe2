@@ -8,6 +8,7 @@ Oppsett på mac/terminal
 4. Sett rettigheter for mappen: sudo chown -R `id -un` /data/db
 5. Start opp server: mongod
 6. Start et nytt terminal-vindu, start database med: mongo
+
 Database skal nå være oppe å gå lokalt på localhost:27017
 
 Les lenker å slack
