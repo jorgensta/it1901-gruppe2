@@ -36,6 +36,20 @@ module.exports = function(app,passport){
 
   });
 
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/tekniker',
+    failureRedirect: '/',
+    failureFlash: true
+  }));
+
+
+  app.post('/login', passport.authenticate('local-login',{
+    successRedirect: '/tekniker',
+    failureRedirect: '/',
+    failureFlash: true
+  }));
+
+
 };
 
 

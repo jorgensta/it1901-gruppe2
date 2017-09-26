@@ -8,37 +8,41 @@ let app      = express();
 let port     = process.env.PORT || 8080;
 let passport = require('passport');
 let flash    = require('connect-flash');
-let LocalStrategy = require('passport-local').Strategy;
 let path = require('path');
 let morgan       = require('morgan');
-let cookieParser = require('cookie-parser');
-let bodyParser   = require('body-parser');
-let session      = require('express-session');
 let mongoose = require('mongoose');
 
-let Datastore = require('nedb');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let session = require('express-session');
 
-let db = new Datastore( {filename: __dirname + "/filer/arbeidere.db", autoload: true});
-//let configDB = require('./database/database.js');
+
+
+let configDB = require('./database/database.js');
+
+mongoose.connect('mongodb://localhost/schmuka');
 
 // configuration ===============================================================
 
-// require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
-// set up our express application
-app.use(morgan('dev')); // log every request to the console
+
+app.use(express.static(__dirname + '/views'));
+
+	// set up our express application
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); // get information from html forms
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(bodyParser.json());
 app.set('view engine', 'ejs'); // set up ejs for templating
 
-// required for passport
+	// required for passport
 app.use(session({ secret: 'lektor' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-app.use(flash());
- // use connect-flash for flash messages stored in session
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
@@ -46,19 +50,3 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 // launch ======================================================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
-
-//Passport setup
-passport.serializeUser(function(user,done){
-  console.log("serializeUser: " , JSON.stringify(user));
-  done(null,user._id);
-});
-
-
-passport.deserializeUser(function(id, done){
-  console.log("deseralizeUser: " + id);
-  db.findOne({_id : id}, function(err,doc){
-    if(doc){
-      return done(null,doc);
-    };
-  });
-});
