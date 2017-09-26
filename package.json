@@ -1,7 +1,7 @@
 {
   "name": "lektorprosjekt",
   "version": "1.0.0",
-  "description": "UKA applikasjon",
+  "description": "SCHMUKA",
   "main": "app.js",
   "directories": {
     "test": "tests"
@@ -20,10 +20,18 @@
   },
   "homepage": "https://github.com/jorgensta/it1901-gruppe2#readme",
   "dependencies": {
-    "body-parser": "^1.18.1",
-    "express": "^4.15.4",
-    "lodash": "^4.17.4",
+    "bcrypt-nodejs": "latest",
+    "body-parser": "^1.18.2",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "latest",
+    "ejs": "~0.8.5",
+    "express": "latest",
+    "express-session": "latest",
+    "method-override": "~1.0.0",
+    "mongoose": "latest",
+    "morgan": "~1.0.0",
     "nedb": "^1.8.0",
-    "passport": "^0.4.0"
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6"
   }
 }
