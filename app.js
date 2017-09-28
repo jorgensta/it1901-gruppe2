@@ -18,7 +18,7 @@ let session = require('express-session');
 
 
 
-let configDB = require('./database/database.js');
+//let configDB = require('./database/database.js');//worthless
 
 mongoose.connect('mongodb://localhost/schmuka');
 

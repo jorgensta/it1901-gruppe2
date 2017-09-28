@@ -11,7 +11,7 @@ module.exports = function(app,passport){
   });
 
   app.get('/tekniker', function(req, res){
-    res.render('tekniker.ejs', {message: req.flash('Signup message')});
+    res.render('tekniker.ejs', {message: req.flash('signupMessage')});
   });
 
   app.get('/arrangor', function(req,res){
@@ -19,7 +19,7 @@ module.exports = function(app,passport){
   });
 
   app.get('/signup', function(req,res){
-    res.render('signup.ejs', {message: req.flash('signup')});
+    res.render('signup.ejs', {message: req.flash('signupMessage')});
   });
 
 
@@ -38,14 +38,14 @@ module.exports = function(app,passport){
 
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/tekniker',
-    failureRedirect: '/',
+    failureRedirect: '/signup',
     failureFlash: true
   }));
 
 
   app.post('/login', passport.authenticate('local-login',{
     successRedirect: '/tekniker',
-    failureRedirect: '/',
+    failureRedirect: '/login',
     failureFlash: true
   }));
 
