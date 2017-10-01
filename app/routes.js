@@ -22,6 +22,10 @@ module.exports = function(app,passport){
     res.render('manager.ejs', {message: req.flash('manager')})
   });
 
+  app.get('/bookingAnsvarlig', function(req,res){
+    res.render('bookingAnsvarlig.ejs', {message: req.flash('bookingAnsvarlig')})
+  });
+
   app.get('/signup', function(req,res){
     res.render('signup.ejs', {message: req.flash('signupMessage')});
   });
