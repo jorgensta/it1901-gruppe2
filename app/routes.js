@@ -18,6 +18,10 @@ module.exports = function(app,passport){
     res.render('arrangor.ejs', {message: req.flash('arrangor')})
   });
 
+  app.get('/manager', function(req,res){
+    res.render('manager.ejs', {message: req.flash('manager')})
+  });
+
   app.get('/signup', function(req,res){
     res.render('signup.ejs', {message: req.flash('signupMessage')});
   });
