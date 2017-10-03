@@ -11,7 +11,9 @@ module.exports = function(app,passport){
   });
 
   app.get('/tekniker', function(req, res){
-    res.render('tekniker.ejs', {message: req.flash('signupMessage')});
+    res.render('tekniker.ejs', {
+      user : req.user, // get the user out of session and pass to template
+      message: req.flash('signupMessage')});
   });
 
   app.get('/arrangor', function(req,res){
