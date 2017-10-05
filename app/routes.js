@@ -1,3 +1,6 @@
+
+
+
 module.exports = function(app,passport){
 
 
@@ -10,10 +13,16 @@ module.exports = function(app,passport){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
 
+
+
   app.get('/tekniker', function(req, res){
-    res.render('tekniker.ejs', {
+    console.log(req.user.local.role);
+    let role = req.user.local.role;
+    let ejs = ".ejs";
+    res.render(role + ejs, {
       user : req.user, // get the user out of session and pass to template
       message: req.flash('signupMessage')});
+
   });
 
   app.get('/arrangor', function(req,res){
@@ -53,11 +62,12 @@ module.exports = function(app,passport){
   }));
 
 
-  app.post('/login', passport.authenticate('local-login',{
-    successRedirect: '/tekniker',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+  app.post('/login', passport.authenticate('local-login'),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.redirect('/tekniker');
+    });
 
 
 };
