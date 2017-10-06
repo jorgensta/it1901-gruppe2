@@ -15,10 +15,12 @@ module.exports = function(app,passport){
 
 
 
-  app.get('/tekniker', function(req, res){
+  app.get('/all', isLoggedIn, function(req, res){
     console.log(req.user.local.role);
+    //Get the user role from database which is in the req object that we get from express and passport
     let role = req.user.local.role;
     let ejs = ".ejs";
+    // render new page based on role
     res.render(role + ejs, {
       user : req.user, // get the user out of session and pass to template
       message: req.flash('signupMessage')});
@@ -49,25 +51,30 @@ module.exports = function(app,passport){
 
   });
 
-  app.get('/logout', function (req,res){
-    res.logout();
-    res.redirect('/');
-
+  app.get('/logout',function(req,res){
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        }
+        else
+        {
+            res.redirect('/');
+        }
+    });
   });
 
   app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/tekniker',
+    successRedirect: '/all',
     failureRedirect: '/signup',
     failureFlash: true
   }));
 
 
-  app.post('/login', passport.authenticate('local-login'),
-    function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.redirect('/tekniker');
-    });
+  app.post('/login', passport.authenticate('local-login',{
+    successRedirect: '/all',
+    failureRedirect: '/login',
+    failureFlash: true
+  } ));
 
 
 };
