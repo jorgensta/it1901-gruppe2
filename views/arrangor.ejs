@@ -74,24 +74,14 @@
 				    </tr>
 				  </thead>
 				  <tbody>
+				  	<% for(var i=0; i<conc.length; i++) { %>
 				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Death by Unga Bunga and the copters</td>
-				      <td>14.09</td>
-				      <td>24:00</td>
+				      <td><%= conc[i].scene %></td>
+				      <td><%= conc[i].artist %></td>
+				      <td><%= conc[i].date %></td>
+				      <td><%= conc[i].time %></td>
 				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Highasakite</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>lalala</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				    </tr>
+				    <% } %>
 				  </tbody>
 				</table>
 			</div>
@@ -109,33 +99,17 @@
 				    </tr>
 				  </thead>
 				  <tbody>
+				  	<% for(var i=0; i<conc.length; i++) { %>
 				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Death by Unga Bunga and the copters</td>
-				      <td>14.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine, Geir, Gunnar, Petter, Petrine, Ulrika, Satan</td>
+				      <td><%= conc[i].scene %></td>
+				      <td><%= conc[i].artist %></td>
+				      <td><%= conc[i].date %></td>
+				      <td><%= conc[i].time %></td>
+				      <td><%= conc[i].lights %></td>
+				      <td><%= conc[i].sound %></td>
+				      <td><%= conc[i].rig %></td>
 					</tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Highasakite</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine</td>
-				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>lalala</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine, Geir, Gunnar, Petter, Petrine, Ulrika, Satan</td>
-				    </tr>
+					<% } %>
 				  </tbody>
 				</table>
 			</div>
