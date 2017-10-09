@@ -99,7 +99,9 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				  	<% for(var i=0; i<conc.length; i++) { %>
+				  	<% for(var i=0; i<conc.length; i++) { 
+              			if(user.local.name == conc[i].arranger) {
+              		%>
 				    <tr>
 				      <td><%= conc[i].scene %></td>
 				      <td><%= conc[i].artist %></td>
@@ -109,7 +111,8 @@
 				      <td><%= conc[i].sound %></td>
 				      <td><%= conc[i].rig %></td>
 					</tr>
-					<% } %>
+					<% }
+					} %>
 				  </tbody>
 				</table>
 			</div>

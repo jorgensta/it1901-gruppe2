@@ -115,9 +115,30 @@ module.exports = function(app,passport){
       teknisk: req.body.teknisk
     }).save(function(err,doc){
       if(err) {
-        res.redirect('/manager');
+        res.redirect('/all');
     }else{
-      res.redirect('/manager');
+      res.redirect('/all');
+    }
+
+    })
+  });
+
+  app.post('/bookingAnsvarlig', function(req,res){
+    new Concert({
+      scene: req.body.scene,
+      artist: req.body.artist,
+      date: req.body.date,
+      time: req.body.time,
+      lights: req.body.lights,
+      sound: req.body.sound,
+      rig: req.body.date,
+      arranger: req.body.arranger,
+      approved: false
+    }).save(function(err,doc){
+      if(err) {
+        res.redirect('/all');
+    }else{
+      res.redirect('/all');
     }
 
     })
