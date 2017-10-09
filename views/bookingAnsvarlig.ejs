@@ -67,7 +67,7 @@
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Teknisk informasjon</a>
           <div class="dropdown-menu">
           <% for(var i=0; i<info.length; i++) { %>
-            <a class="dropdown-item" data-toggle="tab" href="#<%= info[i].band %>"><%= info[i].band %></a>
+            <a class="dropdown-item" data-toggle="tab" href="#bandID-<%= i %>"><%= info[i].band %></a>
           <% } %>
           </div>
         </li>
@@ -185,7 +185,7 @@
           </form>
         </div>
         <% for(var i=0; i<info.length; i++) { %>
-        <div class="tab-pane" id="<%= info[i].band %>" role="tabpanel"><b> Band:</b></br> <%= info[i].band %>  </br></br> <b>Managers kontaktinformasjon:</b></br> <%= info[i].managerEpost %> </br></br><b>Teknisk informasjon:</b></br> <%= info[i].teknisk %></div>
+        <div class="tab-pane" id="bandID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= info[i].band %>  </br></br> <b>Managers kontaktinformasjon:</b></br> <%= info[i].managerEpost %> </br></br><b>Teknisk informasjon:</b></br> <%= info[i].teknisk %></div>
         <% } %>
       </div>
 
@@ -210,6 +210,7 @@
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/popper/popper.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+     <script src="https://cdn of underscore"></script>
 
   </body>
 
