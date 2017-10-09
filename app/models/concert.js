@@ -8,9 +8,9 @@ let Concert = new Schema({
     scene : String,
     date : String,
     time : String,
-    lights : String,
-    sound : String,
-    rig : String,
+    lights : [String],
+    sound : [String],
+    rig : [String],
     arranger : String,
     approved : Boolean
 

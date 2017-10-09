@@ -7,6 +7,8 @@ module.exports = function(app,passport){
 
   let Band = require('../app/models/band');
 
+  let User = require('../app/models/user');
+
 
 //renders the index page
   app.get('/', function (req,res){
@@ -53,11 +55,17 @@ module.exports = function(app,passport){
       Band.find(function(err,info){
         if(err) console.log(err);
         else{
-          res.render(role + ejs, {
-            info: info,
-            user: req.user,
-            message: req.flash('insert message here')
-          });
+          User.find( {$or: [{"local.role": "tekniker"} , {"local.role": "arrangor"}]}, function(err, users) {
+            if(err) console.log(err);
+          else{
+            res.render(role + ejs, {
+              info: info,
+              user: req.user,
+              users: users,
+              message: req.flash('insert message here')
+              });
+            } 
+          })
         }
       })
     }
