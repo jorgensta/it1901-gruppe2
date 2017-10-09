@@ -79,36 +79,57 @@
         <div class="tab-pane" id="profile" role="tabpanel">...</div>
         <div class="tab-pane" id="booking" role="tabpanel">
           <form action='/bookingAnsvarlig' method="POST">
-            <div class="form-group">
-              <label for="Scene">Scene:</label>
-              <input type="text" class="form-control" name="scene" placeholder="Skriv inn scenenavn">
+            <label for="Scene"><b>Scene:</b></label>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="scene" value="Dødens dal" checked>
+                Dødens dal
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="scene" value="Storsalen">
+                Storsalen
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="scene" value="Klubben">
+                Klubben
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="scene" value="Knaus">
+                Knaus
+              </label>
             </div>
             <div class="form-group">
-              <label for="Artist">Band/Artist:</label>
+              <label for="Artist"><b>Band/Artist:</b></label>
               <input type="text" class="form-control" name="artist" placeholder="Skriv inn band eller artist-navn">
             </div>
             <div class="form-group">
-              <label for="Dato">Dato:</label>
+              <label for="Dato"><b>Dato:</b></label>
               <input type="text" class="form-control" name="date" placeholder="Skriv inn dato(dd.mm.yyyy)">
             </div>
             <div class="form-group">
-              <label for="Tid">Tid:</label>
+              <label for="Tid"><b>Tid:</b></label>
               <input type="text" class="form-control" name="time" placeholder="Skriv inn tidspunkt(mm:hh)">
             </div>
             <div class="form-group">
-              <label for="Lys">Lys:</label>
+              <label for="Lys"><b>Lys:</b></label>
               <input type="text" class="form-control" name="lights" placeholder="Skriv inn ansvarlig for lys">
             </div>
             <div class="form-group">
-              <label for="Lyd">Lyd:</label>
+              <label for="Lyd"><b>Lyd:</b></label>
               <input type="text" class="form-control" name="sound" placeholder="Skriv inn ansvarlig for lyd">
             </div>
             <div class="form-group">
-              <label for="Rig">Rigging:</label>
+              <label for="Rig"><b>Rigging:</b></label>
               <input type="text" class="form-control" name="rig" placeholder="Skriv inn ansvarlig for rigging">
             </div>
             <div class="form-group">
-              <label for="Arranger">Arrangør:</label>
+              <label for="Arranger"><b>Arrangør:</b></label>
               <input type="text" class="form-control" name="arranger" placeholder="Skriv inn arrangør for konserten">
             </div>
             <button type="submit" class="btn btn-primary">Send til bookingsjef</button>

@@ -131,7 +131,7 @@ module.exports = function(app,passport){
       time: req.body.time,
       lights: req.body.lights,
       sound: req.body.sound,
-      rig: req.body.date,
+      rig: req.body.rig,
       arranger: req.body.arranger,
       approved: false
     }).save(function(err,doc){
