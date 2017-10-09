@@ -79,19 +79,49 @@
 				  </thead>
 				  <tbody>
             <!--Fething concerts from database and displaying if tekniker is assosciated(?) with the concert -->
-            <% for(var i=0; i<conc.length; i++) { 
-              if((user.local.name == conc[i].lights) || (user.local.name == conc[i].sound) || (user.local.name == conc[i].rig)) {
+            <% 
+            for(var i=0; i<conc.length; i++) {
+              var searchLength = 0; 
+              if(conc[i].lights.length>conc[i].sound.length) { 
+                if(conc[i].rig.length>conc[i].lights.length) {
+                  searchLength = conc[i].rig.length;
+                }
+                else {
+                  searchLength = conc[i].lights.length;
+                }
+              }
+              else {
+                if(conc[i].rig.length>conc[i].lights.length) {
+                  searchLength = conc[i].rig.length;
+                }
+                else {
+                  searchLength = conc[i].sound.length;
+                }
+              }
+
+              for(var j=0; j<searchLength; j++) {
+                  if((user.local.name == conc[i].lights[j]) || (user.local.name == conc[i].sound[j]) || (user.local.name == conc[i].rig[j])) {
               %>
-				    <tr>
-				      <td><%= conc[i].scene %></td>
-				      <td><%= conc[i].artist %></td>
-				      <td><%= conc[i].date %></td>
-				      <td><%= conc[i].time %></td>
-				      <td><%= conc[i].lights %></td>
-				      <td><%= conc[i].sound %></td>
-				      <td><%= conc[i].rig %></td>
-					</tr>
-          <% } 
+  				    <tr>
+  				      <td><%= conc[i].scene %></td>
+  				      <td><%= conc[i].artist %></td>
+  				      <td><%= conc[i].date %></td>
+  				      <td><%= conc[i].time %></td>
+                <td><% for(var k=0; k<conc[i].lights.length; k++) { %>
+                   <%= conc[i].lights[k] %></br>
+                <% } %>
+                </td>
+                <td><% for(var k=0; k<conc[i].sound.length; k++) { %>
+                   <%= conc[i].sound[k] %></br>
+                <% } %>
+                </td>
+  				      <td><% for(var k=0; k<conc[i].rig.length; k++) { %>
+                   <%= conc[i].rig[k] %></br>
+                <% } %>
+                </td>
+  					</tr>
+            <% break }
+              } 
           } %>
 				  </tbody>
 				</table>
