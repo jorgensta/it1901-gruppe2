@@ -56,7 +56,6 @@
         <h1 class="display-3">Tekniker <%= user.local.name %></h1>
         <p class="lead">Her kan du finne oversikt over alle konserter du skal jobbe med.</p>
       </header>
-<%= conc[0].artist %>
 	<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
@@ -79,33 +78,21 @@
 				    </tr>
 				  </thead>
 				  <tbody>
+            <!--Fething concerts from database and displaying if tekniker is assosciated(?) with the concert -->
+            <% for(var i=0; i<conc.length; i++) { 
+              if((user.local.name == conc[i].lights) || (user.local.name == conc[i].sound) || (user.local.name == conc[i].rig)) {
+              %>
 				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Death by Unga Bunga and the copters</td>
-				      <td>14.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine, Geir, Gunnar, Petter, Petrine, Ulrika, Satan</td>
+				      <td><%= conc[i].scene %></td>
+				      <td><%= conc[i].artist %></td>
+				      <td><%= conc[i].date %></td>
+				      <td><%= conc[i].time %></td>
+				      <td><%= conc[i].lights %></td>
+				      <td><%= conc[i].sound %></td>
+				      <td><%= conc[i].rig %></td>
 					</tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Highasakite</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine</td>
-				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>lalala</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine, Geir, Gunnar, Petter, Petrine, Ulrika, Satan</td>
-				    </tr>
+          <% } 
+          } %>
 				  </tbody>
 				</table>
 			</div>
