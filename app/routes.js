@@ -34,6 +34,7 @@ module.exports = function(app,passport){
     //Query for finding all concerts, further manipulation of data is done in EJS template.
 
     if(role === 'tekniker' || role === 'arrangor'){
+      let mysort = { scene: 1 };
       Concert.find(function (err, conc){
         //if theres an error, log it
         if(err){
@@ -47,7 +48,7 @@ module.exports = function(app,passport){
             message: req.flash('signupMessage')
           });
         }
-      })
+      }).sort({scene: 1});
     }
 
     if(role === 'bookingAnsvarlig'){
