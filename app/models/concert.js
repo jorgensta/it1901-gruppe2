@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let Concert = new Schema({
-    
+
 	artist : String,
     scene : String,
     date : String,

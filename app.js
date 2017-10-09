@@ -19,13 +19,38 @@ let session = require('express-session');
 
 
 //let configDB = require('./database/database.js');//worthless
-
-mongoose.connect('mongodb://localhost/schmuka');
-
+  mongoose.connect('mongodb://localhost/schmuka');
 // configuration ===============================================================
 
 require('./config/passport')(passport); // pass passport for configuration
 
+let Concert = require(__dirname + '/app/models/concert');
+
+/*
+function createData(){
+
+  var concert = new Concert();
+
+  concert.artist = 'Jogge';
+  concert.scene = 'dodens dal';
+  concert.date = 'mandag';
+  concert.time = '18.00';
+  concert.lights = 'Magnus';
+  concert.sound = 'Ulrik';
+  concert.rig = 'Ole';
+
+  concert.save(function(err){
+    if(err) throw err;
+    return done(null,concert);
+  });
+
+
+};
+
+
+createData();
+
+*/
 
 app.use(express.static(__dirname + '/views'));
 
@@ -45,7 +70,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport,mongoose); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
 app.listen(port);

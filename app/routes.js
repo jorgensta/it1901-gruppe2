@@ -2,14 +2,16 @@
 
 
 module.exports = function(app,passport){
-
+//get the template for concert. which is in /app/models/concert.js
   let Concert = require('../app/models/concert');
 
+
+//renders the index page
   app.get('/', function (req,res){
     res.render('index.ejs');
 
   });
-
+//renders login-in page
   app.get('/login', function(req, res){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
@@ -21,11 +23,14 @@ module.exports = function(app,passport){
     //Get the user role from database which is in the req object that we get from express and passport
     let role = req.user.local.role;
     let ejs = ".ejs";
+    //Query for finding all concerts, further manipulation of data is done in EJS template.
     Concert.find(function (err, conc){
+      //if theres an error, log it
       if(err){
         console.log(err);
       }
       else {
+        //else, render correct page based on role, and send a list of every concert data over to EJS templates.
         res.render(role + ejs, {
           conc: conc,
           user : req.user,
@@ -41,30 +46,11 @@ module.exports = function(app,passport){
 */
   });
 
-  app.get('/arrangor', function(req,res){
-    res.render('arrangor.ejs', {message: req.flash('arrangor')})
-  });
-
-  app.get('/manager', function(req,res){
-    res.render('manager.ejs', {message: req.flash('manager')})
-  });
-
-  app.get('/bookingAnsvarlig', function(req,res){
-    res.render('bookingAnsvarlig.ejs', {message: req.flash('bookingAnsvarlig')})
-  });
-
+//renders login page
   app.get('/signup', function(req,res){
     res.render('signup.ejs', {message: req.flash('signupMessage')});
   });
-
-
-  app.get('/profile', isLoggedIn,  function(req,res){
-    res.render('profile.ejs', {
-      user: req.user
-    });
-
-  });
-
+// logout function when "logout" is pressed
   app.get('/logout',function(req,res){
     req.session.destroy(function(err){
         if(err){
@@ -72,10 +58,12 @@ module.exports = function(app,passport){
         }
         else
         {
+          console.log("Destroying session, " + req.body.email + " is logged out" )
             res.redirect('/');
         }
     });
   });
+
 
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/all',
