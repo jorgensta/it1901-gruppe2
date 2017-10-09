@@ -52,7 +52,6 @@
         <h1 class="display-3">Booking-ansvarlig</h1>
         <p class="lead">Her kan du finne teknisk informasjon for konserter.</p>
       </header>
-      <%= info[0].teknisk %>
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
@@ -67,9 +66,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Teknisk informasjon</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" data-toggle="tab" href="#highasakite">Highasakite</a>
-            <a class="dropdown-item" data-toggle="tab" href="#zaloKameratene">ZaloKameratene</a>
-            <a class="dropdown-item" data-toggle="tab" href="#lalalalo">Lalalalo</a>
+          <% for(var i=0; i<info.length; i++) { %>
+            <a class="dropdown-item" data-toggle="tab" href="#<%= info[i].band %>"><%= info[i].band %></a>
+          <% } %>
           </div>
         </li>
       </ul>
@@ -79,9 +78,9 @@
         <div class="tab-pane active" id="home" role="tabpanel">...</div>
         <div class="tab-pane" id="profile" role="tabpanel">...</div>
         <div class="tab-pane" id="messages" role="tabpanel">...</div>
-        <div class="tab-pane" id="highasakite" role="tabpanel">teknisk info om highasakite</div>
-        <div class="tab-pane" id="zaloKameratene" role="tabpanel">teknisk info om zaloKameratene</div>
-        <div class="tab-pane" id="lalalalo" role="tabpanel">teknisk info om Lalalalalalalo</div>
+        <% for(var i=0; i<info.length; i++) { %>
+        <div class="tab-pane" id="<%= info[i].band %>" role="tabpanel"><b> Band:</b></br> <%= info[i].band %>  </br></br> <b>Managers kontaktinformasjon:</b></br> <%= info[i].managerEpost %> </br></br><b>Teknisk informasjon:</b></br> <%= info[i].teknisk %></div>
+        <% } %>
       </div>
 
 
