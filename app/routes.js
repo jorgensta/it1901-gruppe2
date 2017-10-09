@@ -61,6 +61,12 @@ module.exports = function(app,passport){
         }
       })
     }
+    if(role === 'manager'){
+      res.render(role + ejs, {
+        user: req.user,
+        message : req.flash("manager")
+      });
+    }
 
     /*
     // render new page based on role
@@ -101,6 +107,23 @@ module.exports = function(app,passport){
     failureRedirect: '/login',
     failureFlash: true
   } ));
+
+  app.post('/manager', function(req,res){
+    new Band({
+      managerEpost: req.body.managerEpost,
+      band: req.body.band,
+      teknisk: req.body.teknisk
+    }).save(function(err,doc){
+      if(err) {
+        res.redirect('/manager');
+    }else{
+      res.redirect('/manager');
+    }
+
+    })
+  });
+
+
 
 
 };
