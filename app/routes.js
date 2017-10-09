@@ -3,6 +3,7 @@
 
 module.exports = function(app,passport){
 
+  let Concert = require('../app/models/concert');
 
   app.get('/', function (req,res){
     res.render('index.ejs');
@@ -20,11 +21,24 @@ module.exports = function(app,passport){
     //Get the user role from database which is in the req object that we get from express and passport
     let role = req.user.local.role;
     let ejs = ".ejs";
+    Concert.find(function (err, conc){
+      if(err){
+        console.log(err);
+      }
+      else {
+        res.render(role + ejs, {
+          conc: conc,
+          user : req.user,
+          message: req.flash('signupMessage')
+        });
+      }
+    })
+    /*
     // render new page based on role
     res.render(role + ejs, {
       user : req.user, // get the user out of session and pass to template
       message: req.flash('signupMessage')});
-
+*/
   });
 
   app.get('/arrangor', function(req,res){
