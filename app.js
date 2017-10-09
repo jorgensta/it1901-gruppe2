@@ -26,25 +26,22 @@ require('./config/passport')(passport); // pass passport for configuration
 
 let Concert = require(__dirname + '/app/models/concert');
 
+let Band = require(__dirname + '/app/models/band');
+
 /*
 function createData(){
 
-  var concert = new Concert();
+  let band = new Band();
 
-  concert.artist = 'Jogge';
-  concert.scene = 'dodens dal';
-  concert.date = 'mandag';
-  concert.time = '18.00';
-  concert.lights = 'Magnus';
-  concert.sound = 'Ulrik';
-  concert.rig = 'Ole';
+  band.managerEpost = 'jorgen@schmuka.no';
+  band.band = 'the jogges & the thorsnes';
+  band.teknisk = 'Vi trenger uendelig mengder med cola, masse potetgull og en 10 liter sprit. Noen er laktoseintolerante, så ikke kjøp melk og diverse produkter';
 
-  concert.save(function(err){
+  band.save(function(err){
     if(err) throw err;
-    return done(null,concert);
+
+    return done(null,band);
   });
-
-
 };
 
 
