@@ -20,6 +20,7 @@ module.exports = function(app,passport){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
 
+  //  DELETE ? denne er vel unødvendig etter /all
   app.get('/manager', function(req,res){
     res.render('manager.ejs', {message: req.flash('managerMessage')});
   });
@@ -75,6 +76,25 @@ module.exports = function(app,passport){
         user: req.user,
         message : req.flash("manager")
       });
+    }
+
+    if(role === 'bookingSjef'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          User.find( {$or: [{"local.role": "tekniker"} , {"local.role": "arrangor"}]}, function(err, users) {
+            if(err) console.log(err);
+          else{
+            res.render(role + ejs, {
+              info: info,
+              user: req.user,
+              users: users,
+              message: req.flash('insert message here')
+              });
+            } 
+          })
+        }
+      })
     }
 
     /*
