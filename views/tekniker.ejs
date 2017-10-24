@@ -81,27 +81,28 @@
             <!--Fething concerts from database and displaying if tekniker is assosciated(?) with the concert -->
             <% 
             for(var i=0; i<conc.length; i++) {
-              var searchLength = 0; 
-              if(conc[i].lights.length>conc[i].sound.length) { 
-                if(conc[i].rig.length>conc[i].lights.length) {
-                  searchLength = conc[i].rig.length;
+              if(conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
+                var searchLength = 0; 
+                if(conc[i].lights.length>conc[i].sound.length) { 
+                  if(conc[i].rig.length>conc[i].lights.length) {
+                    searchLength = conc[i].rig.length;
+                  }
+                  else {
+                    searchLength = conc[i].lights.length;
+                  }
                 }
                 else {
-                  searchLength = conc[i].lights.length;
+                  if(conc[i].rig.length>conc[i].lights.length) {
+                    searchLength = conc[i].rig.length;
+                  }
+                  else {
+                    searchLength = conc[i].sound.length;
+                  }
                 }
-              }
-              else {
-                if(conc[i].rig.length>conc[i].lights.length) {
-                  searchLength = conc[i].rig.length;
-                }
-                else {
-                  searchLength = conc[i].sound.length;
-                }
-              }
 
-              for(var j=0; j<searchLength; j++) {
-                  if((user.local.name == conc[i].lights[j]) || (user.local.name == conc[i].sound[j]) || (user.local.name == conc[i].rig[j])) {
-              %>
+                for(var j=0; j<searchLength; j++) {
+                    if((user.local.name == conc[i].lights[j]) || (user.local.name == conc[i].sound[j]) || (user.local.name == conc[i].rig[j])) {
+                %>
   				    <tr>
   				      <td><%= conc[i].scene %></td>
   				      <td><%= conc[i].artist %></td>
@@ -122,6 +123,7 @@
   					</tr>
             <% break }
               } 
+            }
           } %>
 				  </tbody>
 				</table>

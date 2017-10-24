@@ -74,14 +74,17 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				  	<% for(var i=0; i<conc.length; i++) { %>
+				  	<% for(var i=0; i<conc.length; i++) { 
+				  		if(conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
+				  	%>
 				    <tr>
 				      <td><%= conc[i].scene %></td>
 				      <td><%= conc[i].artist %></td>
 				      <td><%= conc[i].date %></td>
 				      <td><%= conc[i].time %></td>
 				    </tr>
-				    <% } %>
+				    <% }
+				    } %>
 				  </tbody>
 				</table>
 			</div>
@@ -100,7 +103,7 @@
 				  </thead>
 				  <tbody>
 				  	<% for(var i=0; i<conc.length; i++) { 
-              			if(user.local.name == conc[i].arranger) {
+              			if(user.local.name == conc[i].arranger && conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
               		%>
 				    <tr>
 				      	<td><%= conc[i].scene %></td>
