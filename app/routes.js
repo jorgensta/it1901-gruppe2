@@ -88,16 +88,26 @@ module.exports = function(app,passport){
       Band.find(function(err,info){
         if(err) console.log(err);
         else{
-          User.find( {$or: [{"local.role": "tekniker"} , {"local.role": "arrangor"}]}, function(err, users) {
+          User.find(function(err, users) {
             if(err) console.log(err);
-          else{
-            res.render(role + ejs, {
-              info: info,
-              user: req.user,
-              users: users,
-              message: req.flash('insert message here')
-              });
-            } 
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('insert message here')
+                  });
+                }
+              }) 
+            }
           })
         }
       })
@@ -146,17 +156,52 @@ module.exports = function(app,passport){
   app.post('/manager', function(req,res){
 
     Band.findOneAndUpdate(
-    { $or:  [{band: req.body.band}, {managerEpost: req.body.managerEpost}]}, // find a document with that filter
+    { $or:  [{band: req.body.band}, {managerEpost: req.body.managerEpost}]}, // find a document with that filter or create a new, if nothing is found
     {
       managerEpost: req.body.managerEpost,
       band: req.body.band,
       teknisk: req.body.teknisk
-    }, // document to insert when nothing was found
+    },
     {upsert: true, new: true, runValidators: true}, // options
     function (err, doc) { // callback
         if (err) {
             res.redirect('/all');
         } else {
+            res.redirect('/all');
+        }
+    })
+  });
+
+  app.post('/approve', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      approvedByBookingSjef: true
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/all');
+        }
+    })
+  });
+
+  app.post('/decline', function(req,res){
+
+    Concert.deleteOne(
+    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
             res.redirect('/all');
         }
     })
@@ -174,7 +219,9 @@ module.exports = function(app,passport){
       sound: req.body.sound,
       rig: req.body.rig,
       arranger: req.body.arranger,
-      approved: false
+      approvedByBookingSjef: false,
+      approvedByManager: false,
+      ticketPrice: req.body.ticketPrice
     }).save(function(err,doc){
       if(err) {
         res.redirect('/all');

@@ -69,13 +69,63 @@
       <!-- Tab panes -->
       <div class="tab-content">
         <div class="tab-pane active" id="home" role="tabpanel">
-          T0D0
-            <!-- T0D0 
-                  displaye alle konserter, som på tekniker.ejs 
-            -->
+          <table class="table">
+          <thead>
+            <tr>
+              <th>Scene</th>
+              <th>Konsert</th>
+              <th>Dato</th>
+              <th>Tid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<conc.length; i++) { 
+                if(conc[i].approvedByBookingSjef == true) {
+                  %>
+            <tr>
+                <td><%= conc[i].scene %></td>
+                <td><%= conc[i].artist %></td>
+                <td><%= conc[i].date %></td>
+                <td><%= conc[i].time %></td>
+          </tr>
+          <% }
+          } %>
+          </tbody>
+        </table>
         </div>
         <div class="tab-pane" id="pending" role="tabpanel">
-          T0D0
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Scene</th>
+                <th>Konsert</th>
+                <th>Dato</th>
+                <th>Tid</th>
+                <th>Arrangor</th>
+                <th>Beregnet billettpris</th>
+                <th>Avslå/Godkjenn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<conc.length; i++) { 
+                    if(conc[i].approvedByBookingSjef == false) {
+                    %>
+              <form action='/bookingSjef' method="POST">
+                <tr>
+                    <td><%=conc[i].scene%></td>
+                    <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
+                    <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].date%>"><%=conc[i].date%></div></td>
+                    <td><div class="form-group"><input type="hidden" name="timeBooked" value="<%=conc[i].time%>"><%=conc[i].time%></div></td>
+                    <td><%=conc[i].arranger%></td>
+                    <td><%=conc[i].ticketPrice%></td>
+                    <td><button class="btn btn-danger btn-sm" formaction="/decline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/approve">Godkjenn</button></td>
+
+                </tr>
+              </form>
+            <% }
+            } %>
+            </tbody>
+          </table>
             <!-- T0D0 
                   displaye ventende bookingtilbud fra bookingansvarlig + knapp for å godkjenne/avslå
             -->

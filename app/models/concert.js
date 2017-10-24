@@ -12,7 +12,9 @@ let Concert = new Schema({
     sound : [String],
     rig : [String],
     arranger : String,
-    approved : Boolean
+    approvedByBookingSjef : Boolean,
+    approvedByManager : Boolean,
+    ticketPrice: String
 
 },{
 	collection: 'concerts'
