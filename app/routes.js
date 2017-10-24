@@ -20,11 +20,11 @@ module.exports = function(app,passport){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
 
-  //  DELETE ? denne er vel unødvendig etter /all
+  /*  DELETE ? denne er vel unødvendig etter /all
   app.get('/manager', function(req,res){
     res.render('manager.ejs', {message: req.flash('managerMessage')});
   });
-
+  */
 
 
   app.get('/all', isLoggedIn, function(req, res){
@@ -72,10 +72,16 @@ module.exports = function(app,passport){
       })
     }
     if(role === 'manager'){
-      res.render(role + ejs, {
-        user: req.user,
-        message : req.flash("manager")
-      });
+      Band.find(function(err,band){
+        if(err) console.log(err);
+        else{
+          res.render(role + ejs, {
+              band: band,
+              user: req.user,
+              message: req.flash('insert message here')
+          });
+        }
+      })
     }
 
     if(role === 'bookingSjef'){
@@ -138,19 +144,25 @@ module.exports = function(app,passport){
   } ));
 
   app.post('/manager', function(req,res){
-    new Band({
+
+    Band.findOneAndUpdate(
+    { $or:  [{band: req.body.band}, {managerEpost: req.body.managerEpost}]}, // find a document with that filter
+    {
       managerEpost: req.body.managerEpost,
       band: req.body.band,
       teknisk: req.body.teknisk
-    }).save(function(err,doc){
-      if(err) {
-        res.redirect('/all');
-    }else{
-      res.redirect('/all');
-    }
-
+    }, // document to insert when nothing was found
+    {upsert: true, new: true, runValidators: true}, // options
+    function (err, doc) { // callback
+        if (err) {
+            res.redirect('/all');
+        } else {
+            res.redirect('/all');
+        }
     })
   });
+
+
 
   app.post('/bookingAnsvarlig', function(req,res){
     new Concert({

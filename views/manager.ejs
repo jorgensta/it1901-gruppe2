@@ -50,20 +50,26 @@
       <!-- Jumbotron Header -->
       <header class="jumbotron my-4">
         <h1 class="display-3">Manager</h1>
-        <p class="lead">Her kan du melde inn tekniske behov for band/artist.</p>
+        <p class="lead">Her kan du melde inn tekniske behov for
+          <% for(var i=0; i<band.length; i++) {
+                if(band[i].managerEpost == user.local.email) { %>
+                  <%=band[i].band%>
+          <% }
+           } %>
+      </p>
       </header>
 
 		<!-- Tab panes -->
 			<div class="tab-pane" id="profile" role="tabpanel">
 				<form action='/manager' method="POST">
-          <div class="form-group">
-            <label for="Epost">Din epost:</label>
-            <input type="email" class="form-control" name="managerEpost" placeholder="Skriv inn din epost">
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Band/Artist:</label>
-            <input type="text" class="form-control" name="band" placeholder="Skriv inn band eller artist-navn">
-          </div>
+            <div class="form-group">
+              <label for="Epost">Din epost:</label>
+              <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>">
+            </div>
+            <div class="form-group">
+              <label for="formGroupExampleInput">Band/Artist:</label>
+              <input type="text" class="form-control" name="band" value="<%for(var i=0;i<band.length;i++){if(band[i].managerEpost==user.local.email){%><%=band[i].band%><%}}%>"><!--must be like this to remove whitespace -->
+            </div>
           <div class="form-group">
             <label for="exampleTextarea">Tekniske behov:</label>
             <textarea class="form-control" name="teknisk" rows="12"></textarea>
