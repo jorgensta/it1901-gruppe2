@@ -45,6 +45,7 @@
     </nav>
 
     <!-- Page Content -->
+    <!-- Page Content -->
     <div class="container">
 
       <!-- Jumbotron Header -->
@@ -58,10 +59,20 @@
            } %>
       </p>
       </header>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#teknisk" role="tab">Send eller oppdater teknisk info</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#pending" role="tab">Bookingtilbud</a>
+        </li>
+      </ul>
 
-		<!-- Tab panes -->
-			<div class="tab-pane" id="profile" role="tabpanel">
-				<form action='/manager' method="POST">
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="teknisk" role="tabpanel">
+          <form action='/manager' method="POST">
             <div class="form-group">
               <label for="Epost">Din epost:</label>
               <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>">
@@ -70,16 +81,56 @@
               <label for="formGroupExampleInput">Band/Artist:</label>
               <input type="text" class="form-control" name="band" value="<%for(var i=0;i<band.length;i++){if(band[i].managerEpost==user.local.email){%><%=band[i].band%><%}}%>"><!--must be like this to remove whitespace -->
             </div>
-          <div class="form-group">
-            <label for="exampleTextarea">Tekniske behov:</label>
-            <textarea class="form-control" name="teknisk" rows="12"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Send</button>
-        </form>
-			</div>
-		</div>
-	</div>
-</div>
+            <div class="form-group">
+              <label for="exampleTextarea">Tekniske behov:</label>
+              <textarea class="form-control" name="teknisk" rows="12"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="pending" role="tabpanel">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Scene</th>
+                <th>Konsert</th>
+                <th>Dato</th>
+                <th>Tid</th>
+                <th>Beregnet billettpris</th>
+                <th>Avslå/Godkjenn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<conc.length; i++) { 
+                    if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == false) {
+                      for(var j=0; j<band.length; j++) {
+                        if(conc[i].artist == band[j].band) {
+                    %>
+                          <form action='/bookingSjef' method="POST">
+                            <tr>
+                                <td><%=conc[i].scene%></td>
+                                <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
+                                <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].date%>"><%=conc[i].date%></div></td>
+                                <td><div class="form-group"><input type="hidden" name="timeBooked" value="<%=conc[i].time%>"><%=conc[i].time%></div></td>
+                                <td><%=conc[i].ticketPrice%></td>
+                                <td><button class="btn btn-danger btn-sm" formaction="/managerDecline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/managerApprove">Godkjenn</button></td>
+
+                            </tr>
+                          </form>
+                <%    }
+                    }
+                  }
+                } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+
 
 	</br>
 	</br>

@@ -118,7 +118,7 @@
                     <td><div class="form-group"><input type="hidden" name="timeBooked" value="<%=conc[i].time%>"><%=conc[i].time%></div></td>
                     <td><%=conc[i].arranger%></td>
                     <td><%=conc[i].ticketPrice%></td>
-                    <td><button class="btn btn-danger btn-sm" formaction="/decline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/approve">Godkjenn</button></td>
+                    <td><button class="btn btn-danger btn-sm" formaction="/bookingSjefDecline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/bookingSjefApprove">Godkjenn</button></td>
 
                 </tr>
               </form>
@@ -126,9 +126,6 @@
             } %>
             </tbody>
           </table>
-            <!-- T0D0 
-                  displaye ventende bookingtilbud fra bookingansvarlig + knapp for å godkjenne/avslå
-            -->
         </div>
         <div class="tab-pane" id="sentToManager" role="tabpanel">
           <table class="table">
@@ -142,7 +139,7 @@
             </thead>
             <tbody>
               <% for(var i=0; i<conc.length; i++) { 
-                  if(conc[i].approvedByBookingSjef == true) {
+                  if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == false) {
                     %>
               <tr>
                   <td><%= conc[i].scene %></td>

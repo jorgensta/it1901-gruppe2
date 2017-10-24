@@ -75,11 +75,27 @@ module.exports = function(app,passport){
       Band.find(function(err,band){
         if(err) console.log(err);
         else{
-          res.render(role + ejs, {
-              band: band,
-              user: req.user,
-              message: req.flash('insert message here')
-          });
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  band: band,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('insert message here')
+                  });
+                }
+              }) 
+            }
+          })
         }
       })
     }
@@ -172,7 +188,7 @@ module.exports = function(app,passport){
     })
   });
 
-  app.post('/approve', function(req,res){
+  app.post('/bookingSjefApprove', function(req,res){
 
     Concert.update(
     { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
@@ -191,7 +207,43 @@ module.exports = function(app,passport){
     })
   });
 
-  app.post('/decline', function(req,res){
+  app.post('/bookingSjefDecline', function(req,res){
+
+    Concert.deleteOne(
+    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/all');
+        }
+    })
+  });
+
+
+  app.post('/managerApprove', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      approvedByManager: true
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/all');
+        }
+    })
+  });
+
+  app.post('/managerDecline', function(req,res){
 
     Concert.deleteOne(
     { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
