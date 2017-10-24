@@ -59,7 +59,7 @@
           <a class="nav-link" data-toggle="tab" href="#pending" role="tab">Ventende bookingtilbud</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#reports" role="tab">Rapporter</a>
+          <a class="nav-link" data-toggle="tab" href="#sentToManager" role="tab">Bookingtilbud sendt til band</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#marketInfo" role="tab">Markedsinformasjon</a>       
@@ -80,7 +80,7 @@
           </thead>
           <tbody>
             <% for(var i=0; i<conc.length; i++) { 
-                if(conc[i].approvedByBookingSjef == true) {
+                if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager) {
                   %>
             <tr>
                 <td><%= conc[i].scene %></td>
@@ -130,11 +130,30 @@
                   displaye ventende bookingtilbud fra bookingansvarlig + knapp for å godkjenne/avslå
             -->
         </div>
-        <div class="tab-pane" id="reports" role="tabpanel">
-            T0D0
-            <!-- T0D0 
-                  displaye rapporter fra tidligere konserter
-            -->
+        <div class="tab-pane" id="sentToManager" role="tabpanel">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Scene</th>
+                <th>Konsert</th>
+                <th>Dato</th>
+                <th>Tid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<conc.length; i++) { 
+                  if(conc[i].approvedByBookingSjef == true) {
+                    %>
+              <tr>
+                  <td><%= conc[i].scene %></td>
+                  <td><%= conc[i].artist %></td>
+                  <td><%= conc[i].date %></td>
+                  <td><%= conc[i].time %></td>
+            </tr>
+            <% }
+            } %>
+            </tbody>
+          </table>
         </div>
         <div class="tab-pane" id="marketInfo" role="tabpanel">
             T0D0
