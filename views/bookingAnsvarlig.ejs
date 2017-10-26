@@ -224,13 +224,12 @@
             </div>
           </form>
         </div>
-        <% for(var i=0; i<conc.length; i++) { 
-            if(conc[i].approvedByManager == true) {
-        %>
+        <% for(var i=0; i<info.length; i++) { %>
         <div class="tab-pane" id="bandID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= info[i].band %>  </br></br> <b>Managers kontaktinformasjon:</b></br> <%= info[i].managerEpost %> </br></br><b>Teknisk informasjon:</b></br> <%= info[i].teknisk %>
         </div>
         <% } %>
         <% for(var i=0; i<conc.length; i++) { %>
+          <%if(conc[i].approvedByManager == true) {%>
           <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= conc[i].artist %>  </br></br><b>Omtale:</b></br>
              <form action='/bookingMention' method="POST">
                 <textarea class="form-control" name="mention" rows="12" <% if(!conc[i].mention) { %> placeholder="Skriv inn omtale"></textarea> <% } else { %> ><%=conc[i].mention%></textarea> <% } %>
