@@ -71,6 +71,17 @@
           <% } %>
           </div>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn omtale</a>
+          <div class="dropdown-menu">
+          <% for(var i=0; i<conc.length; i++) {
+              if(conc[i].approvedByManager == true) {
+            %>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %></a>
+          <% }
+          } %>
+          </div>
+        </li>
       </ul>
 
       <!-- Tab panes -->
@@ -189,9 +200,25 @@
             </div>
           </form>
         </div>
-        <% for(var i=0; i<info.length; i++) { %>
-        <div class="tab-pane" id="bandID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= info[i].band %>  </br></br> <b>Managers kontaktinformasjon:</b></br> <%= info[i].managerEpost %> </br></br><b>Teknisk informasjon:</b></br> <%= info[i].teknisk %></div>
+        <% for(var i=0; i<conc.length; i++) { 
+            if(conc[i].approvedByManager == true) {
+        %>
+        <div class="tab-pane" id="bandID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= info[i].band %>  </br></br> <b>Managers kontaktinformasjon:</b></br> <%= info[i].managerEpost %> </br></br><b>Teknisk informasjon:</b></br> <%= info[i].teknisk %>
+        </div>
         <% } %>
+        <% for(var i=0; i<conc.length; i++) { %>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= conc[i].artist %>  </br></br><b>Omtale:</b></br>
+             <form action='/bookingMention' method="POST">
+                <textarea class="form-control" name="mention" rows="12" <% if(!conc[i].mention) { %> placeholder="Skriv inn omtale"></textarea> <% } else { %> ><%=conc[i].mention%></textarea> <% } %>
+                <input type="hidden" name="artistBooked" value="<%=conc[i].artist%>">
+                <input type="hidden" name="dateBooked" value="<%=conc[i].date%>">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Oppdater/Legg inn omtale</button></td>
+              </form>
+          </div>
+          <% }
+          } %>
       </div>
 
 

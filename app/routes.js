@@ -53,24 +53,34 @@ module.exports = function(app,passport){
     }
 
     if(role === 'bookingAnsvarlig'){
-
       Band.find(function(err,info){
         if(err) console.log(err);
         else{
-          User.find( {$or: [{"local.role": "tekniker"} , {"local.role": "arrangor"}]}, function(err, users) {
+          User.find(function(err, users) {
             if(err) console.log(err);
-          else{
-            res.render(role + ejs, {
-              info: info,
-              user: req.user,
-              users: users,
-              message: req.flash('insert message here')
-              });
-            } 
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('insert message here')
+                  });
+                }
+              }) 
+            }
           })
         }
       })
     }
+
     if(role === 'manager'){
       Band.find(function(err,band){
         if(err) console.log(err);
@@ -247,6 +257,26 @@ module.exports = function(app,passport){
 
     Concert.deleteOne(
     { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/all');
+        }
+    })
+  });
+
+
+  app.post('/bookingMention', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      mention: req.body.mention
+    },
      // options
     function (err, doc) { // callback
         if (err) {
