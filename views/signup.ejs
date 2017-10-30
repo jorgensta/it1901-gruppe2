@@ -37,7 +37,15 @@
         </div>
         <div class="form-group">
             <label>Role</label>
-            <input type="text" class="form-control" name="role">
+            <select class = "selectpicker" name="role">
+              <option class="form-control" value="manager">Manager</option>
+              <option class="form-control" value="bookingAnsvarlig">Bookingansvarlig</option>
+              <option class="form-control" value="bookingSjef">Bookingsjef</option>
+              <option class="form-control" value="serveringsAnsvarlig">Serveringsansvarlig</option>
+              <option class="form-control" value="tekniker">Lystekniker</option>
+              <option class="form-control" value="tekniker">Lydtekniker</option>
+              <option class="form-control" value="arrangor">Konsertarrangør</option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-warning btn-lg">Signup</button>
