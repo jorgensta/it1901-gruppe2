@@ -73,11 +73,11 @@
               <th>Forventet publikumsantall</th>
               <th>Innkjøpsberegning</th>
 
-              
+
             </tr>
           </thead>
           <tbody>
-            <% for(var i=0; i<conc.length; i++) { 
+            <% for(var i=0; i<conc.length; i++) {
                 if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager) {
                   %>
             <tr>
@@ -86,16 +86,43 @@
                 <td><%= conc[i].date %></td>
                 <td><%= conc[i].time %></td>
                 <!-- T0D0 -->
-                <td><%= conc[i].duration %></td>
-                <td><%= conc[i].publicEstimate %></td>
-                
+                <% if(conc[i].scene == "Dødens dal") { %>
+                  <td> 4000 </td>
+                <% } if(conc[i].scene == "Storsalen") { %>
+                  <td> 800 </td>
+                <% } if(conc[i].scene == "Knaus") { %>
+                    <td> 100 </td>
+
+                <% } if(conc[i].scene == "Klubben") { %>
+                      <td> 300 </td>
+                <% } %>
+
+                <td>
+                  <% if(conc[i].scene == "Dødens dal") { %>
+                    Øl: 8000 </br>
+                    Vin: 300 </br>
+                    Cava: 80 </br>
+                  <% } if(conc[i].scene == "Klubben") { %>
+                    Øl: 400 </br>
+                    Vin: 50 </br>
+                    Cava: 5 </br>
+                  <% } if(conc[i].scene == "Knaus") { %>
+                    Øl: 160 </br>
+                    Vin: 40 </br>
+                    Cava: 10 </br>
+                  <% } if(conc[i].scene == "Storsalen") { %>
+                    Øl: 1850 </br>
+                    Vin: 50 </br>
+                    <% } %>
+                </td>
+
           </tr>
           <% }
           } %>
           </tbody>
         </table>
         </div>
-      </div>  
+      </div>
   	</div>
 
 	</br>
