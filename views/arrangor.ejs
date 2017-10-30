@@ -59,6 +59,17 @@
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#profile" role="tab">Dine konserter</a>
 			</li>
+			<li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sanger som skal spilles</a>
+	          <div class="dropdown-menu">
+	          <% for(var i=0; i<conc.length; i++) {
+	              if(conc[i].approvedByManager == true && user.local.name == conc[i].arranger) {
+	            %>
+	            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %>, <%= conc[i].date %></a>
+	          <% }
+	          } %>
+	          </div>
+	        </li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -128,6 +139,13 @@
 				  </tbody>
 				</table>
 			</div>
+			<% for(var i=0; i<conc.length; i++) { %>
+          <%if(conc[i].approvedByManager && user.local.name == conc[i].arranger) {%>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].date %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+          	<%= conc[i].songs %>
+          </div>
+          <% }
+          } %>
 		</div>
 	</div>
 </div>
