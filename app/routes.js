@@ -311,6 +311,25 @@ module.exports = function(app,passport){
     })
   });
 
+  app.post('/addSongs', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      songs: req.body.songs
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/all');
+        }
+    })
+  });
+
 
 
   app.post('/bookingAnsvarlig', function(req,res){

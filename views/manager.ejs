@@ -146,7 +146,7 @@
           <%if(conc[i].approvedByManager && thisBand == conc[i].artist) {%>
           <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].date %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
              <form action='/addSongs' method="POST">
-                <textarea class="form-control" name="mention" rows="12" <% if(!conc[i].songs) { %> placeholder="Skriv inn sanger"></textarea> <% } else { %> ><%=conc[i].songs%></textarea> <% } %>
+                <textarea class="form-control" name="songs" rows="12" <% if(!conc[i].songs) { %> placeholder="Skriv inn sanger"></textarea> <% } else { %> ><%=conc[i].songs%></textarea> <% } %>
                 <input type="hidden" name="artistBooked" value="<%=conc[i].artist%>">
                 <input type="hidden" name="dateBooked" value="<%=conc[i].date%>">
                 <br>
