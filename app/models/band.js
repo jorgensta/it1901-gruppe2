@@ -5,7 +5,8 @@ let Band = new Schema({
 
     managerEpost: String,
     band: String,
-    teknisk: String
+    teknisk: String,
+    sjanger: String
     
 },{
 	collection: 'bands'

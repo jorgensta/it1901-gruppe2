@@ -74,7 +74,7 @@ module.exports = function(app,passport){
                   message: req.flash('insert message here')
                   });
                 }
-              }) 
+              })
             }
           })
         }
@@ -103,7 +103,7 @@ module.exports = function(app,passport){
                   message: req.flash('insert message here')
                   });
                 }
-              }) 
+              })
             }
           })
         }
@@ -132,7 +132,27 @@ module.exports = function(app,passport){
                   message: req.flash('insert message here')
                   });
                 }
-              }) 
+              })
+            }
+          })
+        }
+      })
+    }
+
+
+    if(role === 'serveringsAnsvarlig'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          Concert.find(function(err, conc){
+            if(err) console.log(err);
+            else{
+              res.render(role + ejs, {
+                info: info,
+                user: req.user,
+                conc: conc,
+                message: req.flash('insert message here')
+              });
             }
           })
         }
@@ -186,7 +206,9 @@ module.exports = function(app,passport){
     {
       managerEpost: req.body.managerEpost,
       band: req.body.band,
-      teknisk: req.body.teknisk
+      teknisk: req.body.teknisk,
+      sjanger: req.body.sjanger
+
     },
     {upsert: true, new: true, runValidators: true}, // options
     function (err, doc) { // callback
@@ -303,7 +325,8 @@ module.exports = function(app,passport){
       arranger: req.body.arranger,
       approvedByBookingSjef: false,
       approvedByManager: false,
-      ticketPrice: req.body.ticketPrice
+      ticketPrice: req.body.ticketPrice,
+      duration: req.body.duration
     }).save(function(err,doc){
       if(err) {
         res.redirect('/all');

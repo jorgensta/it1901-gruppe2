@@ -82,6 +82,10 @@
               <input type="text" class="form-control" name="band" value="<%for(var i=0;i<band.length;i++){if(band[i].managerEpost==user.local.email){%><%=band[i].band%><%}}%>"><!--must be like this to remove whitespace -->
             </div>
             <div class="form-group">
+              <label for="Epost">Sjanger:</label>
+              <input type="text" class="form-control" name="sjanger" placeholder="Skriv inn sjanger">
+            </div>
+            <div class="form-group">
               <label for="exampleTextarea">Tekniske behov:</label>
               <textarea class="form-control" name="teknisk" rows="12"></textarea>
             </div>
@@ -102,7 +106,7 @@
               </tr>
             </thead>
             <tbody>
-              <% for(var i=0; i<conc.length; i++) { 
+              <% for(var i=0; i<conc.length; i++) {
                     if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == false) {
                       for(var j=0; j<band.length; j++) {
                         if(conc[i].artist == band[j].band) {

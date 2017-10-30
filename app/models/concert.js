@@ -15,7 +15,8 @@ let Concert = new Schema({
     approvedByBookingSjef : Boolean,
     approvedByManager : Boolean,
     ticketPrice: String,
-    mention: String
+    mention: String,
+		duration: String
 
 },{
 	collection: 'concerts'
