@@ -77,7 +77,7 @@
           <% for(var i=0; i<conc.length; i++) {
               if(conc[i].approvedByManager == true) {
             %>
-            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %></a>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %>, <%= conc[i].date %></a>
           <% }
           } %>
           </div>

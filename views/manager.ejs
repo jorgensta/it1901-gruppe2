@@ -52,9 +52,11 @@
       <header class="jumbotron my-4">
         <h1 class="display-3">Manager</h1>
         <p class="lead">Her kan du melde inn tekniske behov for
-          <% for(var i=0; i<band.length; i++) {
+          <% var thisBand = null;
+          for(var i=0; i<band.length; i++) {
                 if(band[i].managerEpost == user.local.email) { %>
                   <%=band[i].band%>
+                  <%thisBand = band[i].band;%>
           <% }
            } %>
       </p>
@@ -66,6 +68,17 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#pending" role="tab">Bookingtilbud</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn sanger for konsert</a>
+          <div class="dropdown-menu">
+          <% for(var i=0; i<conc.length; i++) {
+              if(conc[i].approvedByManager == true && thisBand == conc[i].artist) {
+            %>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].scene %>, <%= conc[i].date %></a>
+          <% }
+          } %>
+          </div>
         </li>
       </ul>
 
@@ -129,6 +142,20 @@
             </tbody>
           </table>
         </div>
+        <% for(var i=0; i<conc.length; i++) { %>
+          <%if(conc[i].approvedByManager && thisBand == conc[i].artist) {%>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].date %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+             <form action='/addSongs' method="POST">
+                <textarea class="form-control" name="mention" rows="12" <% if(!conc[i].songs) { %> placeholder="Skriv inn sanger"></textarea> <% } else { %> ><%=conc[i].songs%></textarea> <% } %>
+                <input type="hidden" name="artistBooked" value="<%=conc[i].artist%>">
+                <input type="hidden" name="dateBooked" value="<%=conc[i].date%>">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Oppdater/Legg inn sanger</button></td>
+              </form>
+          </div>
+          <% }
+          } %>
       </div>
     </div>
 
