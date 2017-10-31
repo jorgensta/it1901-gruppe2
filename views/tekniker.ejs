@@ -61,10 +61,14 @@
 			<li class="nav-item">
 				<a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Konserter</a>
 			</li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#melding" role="tab">Oppmøtemelding</a>
+      </li>
 		</ul>
 
 		<!-- Tab panes -->
-			<div class="tab-pane" id="profile" role="tabpanel">
+    <div class="tab-content">
+			<div class="tab-pane active" id="profile" role="tabpanel">
 				<table class="table">
 				  <thead>
 				    <tr>
@@ -79,11 +83,11 @@
 				  </thead>
 				  <tbody>
             <!--Fething concerts from database and displaying if tekniker is assosciated(?) with the concert -->
-            <% 
+            <%
             for(var i=0; i<conc.length; i++) {
               if(conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
-                var searchLength = 0; 
-                if(conc[i].lights.length>conc[i].sound.length) { 
+                var searchLength = 0;
+                if(conc[i].lights.length>conc[i].sound.length) {
                   if(conc[i].rig.length>conc[i].lights.length) {
                     searchLength = conc[i].rig.length;
                   }
@@ -122,13 +126,22 @@
                 </td>
   					</tr>
             <% break }
-              } 
+              }
             }
           } %>
 				  </tbody>
 				</table>
 			</div>
-		</div>
+      <div class="tab-pane" id="melding" role="tabpanel">
+        <form action="/all" method="GET">
+          <br>
+          <a> Meld fra om oppmøte</a>
+          <br><br>
+          <textarea class="form-control" rows="2" placeholder="Skriv inn nødvendig informasjon">
+          </textarea>
+          <br>
+          <button class="btn btn-primary" type="submit">Send melding til arrangør</button>
+          <form>
 	</div>
 </div>
 

@@ -16,7 +16,7 @@ let Concert = new Schema({
     approvedByManager : Boolean,
     ticketPrice: String,
     mention: String,
-	duration: String,
+		duration: String,
     songs: String
 
 },{
