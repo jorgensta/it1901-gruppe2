@@ -159,6 +159,27 @@ module.exports = function(app,passport){
       })
     }
 
+    if(role === 'PR'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          Concert.find(function(err,conc){
+            if(err) console.log(err);
+            else{
+              res.render(role + ejs,{
+                info: info,
+                user: req.user,
+                conc: conc,
+                message: req.flash('insert message here')
+              });
+            }
+          })
+        }
+      })
+    }
+
+
+
     /*
     // render new page based on role
     res.render(role + ejs, {

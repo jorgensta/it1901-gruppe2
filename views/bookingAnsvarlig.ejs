@@ -233,7 +233,7 @@
         </div>
         <% } %>
         <% for(var i=0; i<conc.length; i++) { %>
-          <%if(conc[i].approvedByManager == true) {%>
+          <% if(conc[i].approvedByManager == true) {%>
           <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band:</b></br> <%= conc[i].artist %>  </br></br><b>Omtale:</b></br>
              <form action='/bookingMention' method="POST">
                 <textarea class="form-control" name="mention" rows="12" <% if(!conc[i].mention) { %> placeholder="Skriv inn omtale"></textarea> <% } else { %> ><%=conc[i].mention%></textarea> <% } %>
