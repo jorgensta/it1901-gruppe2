@@ -74,8 +74,7 @@
             <tr>
               <th>Scene</th>
               <th>Konsert</th>
-              <th>Dato</th>
-              <th>Tid</th>
+              <th>Tidspunkt</th>
             </tr>
           </thead>
           <tbody>
@@ -85,8 +84,7 @@
             <tr>
                 <td><%= conc[i].scene %></td>
                 <td><%= conc[i].artist %></td>
-                <td><%= conc[i].date %></td>
-                <td><%= conc[i].time %></td>
+                <td><%= conc[i].start %></td>
           </tr>
           <% }
           } %>
@@ -99,8 +97,7 @@
               <tr>
                 <th>Scene</th>
                 <th>Konsert</th>
-                <th>Dato</th>
-                <th>Tid</th>
+                <th>Tidspunkt</th>
                 <th>Arrangor</th>
                 <th>Beregnet billettpris</th>
                 <th>Avslå/Godkjenn</th>
@@ -114,8 +111,7 @@
                 <tr>
                     <td><%=conc[i].scene%></td>
                     <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
-                    <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].date%>"><%=conc[i].date%></div></td>
-                    <td><div class="form-group"><input type="hidden" name="timeBooked" value="<%=conc[i].time%>"><%=conc[i].time%></div></td>
+                    <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>"><%=conc[i].start%></div></td>
                     <td><%=conc[i].arranger%></td>
                     <td><%=conc[i].ticketPrice%></td>
                     <td><button class="btn btn-danger btn-sm" formaction="/bookingSjefDecline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/bookingSjefApprove">Godkjenn</button></td>
@@ -133,8 +129,7 @@
               <tr>
                 <th>Scene</th>
                 <th>Konsert</th>
-                <th>Dato</th>
-                <th>Tid</th>
+                <th>Tidspunkt</th>
               </tr>
             </thead>
             <tbody>
@@ -144,12 +139,11 @@
               <tr>
                   <td><%= conc[i].scene %></td>
                   <td><%= conc[i].artist %></td>
-                  <td><%= conc[i].date %></td>
-                  <td><%= conc[i].time %></td>
+                  <td><%= conc[i].start %></td>
             </tr>
             <% }
             } %>
-            </tbody>
+            </tbody>  
           </table>
         </div>
         <div class="tab-pane" id="marketInfo" role="tabpanel">

@@ -16,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="css/heroic-features.css" rel="stylesheet">
 
+
   </head>
 
   <body>
@@ -77,7 +78,7 @@
           <% for(var i=0; i<conc.length; i++) {
               if(conc[i].approvedByManager == true) {
             %>
-            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %>, <%= conc[i].date %></a>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %>, <%= conc[i].start %></a>
           <% }
           } %>
           </div>
@@ -92,8 +93,7 @@
             <tr>
               <th>Scene</th>
               <th>Konsert</th>
-              <th>Dato</th>
-              <th>Tid</th>
+              <th>Tidspunkt</th>
             </tr>
           </thead>
           <tbody>
@@ -103,8 +103,7 @@
             <tr>
                 <td><%= conc[i].scene %></td>
                 <td><%= conc[i].artist %></td>
-                <td><%= conc[i].date %></td>
-                <td><%= conc[i].time %></td>
+                <td><%= conc[i].start %></td>
           </tr>
           <% }
           } %>
@@ -144,16 +143,12 @@
               <input type="text" class="form-control" name="artist" placeholder="Skriv inn band eller artist-navn">
             </div>
             <div class="form-group">
-              <label for="Dato"><b>Dato:</b></label>
-              <input type="text" class="form-control" name="date" placeholder="Skriv inn dato(dd.mm.yyyy)">
+              <label for="start"><b>Konsertstart:</b></label>
+              <input type="datetime-local" class="form-control" name="start">
             </div>
             <div class="form-group">
-              <label for="Tid"><b>Start Tid:</b></label>
-              <input type="text" class="form-control" name="time" placeholder="Skriv inn start(hh:mm)">
-            </div>
-            <div class="form-group">
-              <label for="Tid"><b>Slutt tid:</b></label>
-              <input type="text" class="form-control" name="time" placeholder="Skriv inn slutt(hh:mm)">
+              <label for="end"><b>Konsertslutt:</b></label>
+              <input type="datetime-local" class="form-control" name="end">
             </div>
             <div>
               <label for="Lys"><b>Lys:</b></label>
@@ -238,7 +233,7 @@
              <form action='/bookingMention' method="POST">
                 <textarea class="form-control" name="mention" rows="12" <% if(!conc[i].mention) { %> placeholder="Skriv inn omtale"></textarea> <% } else { %> ><%=conc[i].mention%></textarea> <% } %>
                 <input type="hidden" name="artistBooked" value="<%=conc[i].artist%>">
-                <input type="hidden" name="dateBooked" value="<%=conc[i].date%>">
+                <input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
                 <br>
                 <br>
                 <button type="submit" class="btn btn-primary">Oppdater/Legg inn omtale</button></td>

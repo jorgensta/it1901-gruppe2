@@ -75,7 +75,7 @@
           <% for(var i=0; i<conc.length; i++) {
               if(conc[i].approvedByManager == true && thisBand == conc[i].artist) {
             %>
-            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].scene %>, <%= conc[i].date %></a>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].scene %>, <%= conc[i].start %></a>
           <% }
           } %>
           </div>
@@ -112,8 +112,7 @@
               <tr>
                 <th>Scene</th>
                 <th>Konsert</th>
-                <th>Dato</th>
-                <th>Tid</th>
+                <th>Tidspunkt</th>
                 <th>Beregnet billettpris</th>
                 <th>Avslå/Godkjenn</th>
               </tr>
@@ -128,8 +127,7 @@
                             <tr>
                                 <td><%=conc[i].scene%></td>
                                 <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
-                                <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].date%>"><%=conc[i].date%></div></td>
-                                <td><div class="form-group"><input type="hidden" name="timeBooked" value="<%=conc[i].time%>"><%=conc[i].time%></div></td>
+                                <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>"><%=conc[i].start%></div></td>
                                 <td><%=conc[i].ticketPrice%></td>
                                 <td><button class="btn btn-danger btn-sm" formaction="/managerDecline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/managerApprove">Godkjenn</button></td>
 
@@ -144,11 +142,11 @@
         </div>
         <% for(var i=0; i<conc.length; i++) { %>
           <%if(conc[i].approvedByManager && thisBand == conc[i].artist) {%>
-          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].date %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].start %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
              <form action='/addSongs' method="POST">
                 <textarea class="form-control" name="songs" rows="12" <% if(!conc[i].songs) { %> placeholder="Skriv inn sanger"></textarea> <% } else { %> ><%=conc[i].songs%></textarea> <% } %>
                 <input type="hidden" name="artistBooked" value="<%=conc[i].artist%>">
-                <input type="hidden" name="dateBooked" value="<%=conc[i].date%>">
+                <input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
                 <br>
                 <br>
                 <button type="submit" class="btn btn-primary">Oppdater/Legg inn sanger</button></td>

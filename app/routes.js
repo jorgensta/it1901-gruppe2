@@ -244,7 +244,7 @@ module.exports = function(app,passport){
   app.post('/bookingSjefApprove', function(req,res){
 
     Concert.update(
-    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
     {
       approvedByBookingSjef: true
     },
@@ -263,7 +263,7 @@ module.exports = function(app,passport){
   app.post('/bookingSjefDecline', function(req,res){
 
     Concert.deleteOne(
-    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
      // options
     function (err, doc) { // callback
         if (err) {
@@ -280,7 +280,7 @@ module.exports = function(app,passport){
   app.post('/managerApprove', function(req,res){
 
     Concert.update(
-    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
     {
       approvedByManager: true
     },
@@ -299,7 +299,7 @@ module.exports = function(app,passport){
   app.post('/managerDecline', function(req,res){
 
     Concert.deleteOne(
-    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
      // options
     function (err, doc) { // callback
         if (err) {
@@ -316,7 +316,7 @@ module.exports = function(app,passport){
   app.post('/bookingMention', function(req,res){
 
     Concert.update(
-    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
     {
       mention: req.body.mention
     },
@@ -335,7 +335,7 @@ module.exports = function(app,passport){
   app.post('/addSongs', function(req,res){
 
     Concert.update(
-    { $and:  [{artist: req.body.artistBooked}, {date: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
     {
       songs: req.body.songs
     },
@@ -357,8 +357,8 @@ module.exports = function(app,passport){
     new Concert({
       scene: req.body.scene,
       artist: req.body.artist,
-      date: req.body.date,
-      time: req.body.time,
+      start: req.body.start,
+      end: req.body.end,
       lights: req.body.lights,
       sound: req.body.sound,
       rig: req.body.rig,
@@ -366,7 +366,6 @@ module.exports = function(app,passport){
       approvedByBookingSjef: false,
       approvedByManager: false,
       ticketPrice: req.body.ticketPrice,
-      duration: req.body.duration
     }).save(function(err,doc){
       if(err) {
         res.redirect('/all');

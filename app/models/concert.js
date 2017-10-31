@@ -6,8 +6,9 @@ let Concert = new Schema({
 
 	artist : String,
     scene : String,
-    date : String,
-    time : String,
+    //start og end må gjøres til date-objekter
+    start : String,
+    end: String,
     lights : [String],
     sound : [String],
     rig : [String],
@@ -16,7 +17,6 @@ let Concert = new Schema({
     approvedByManager : Boolean,
     ticketPrice: String,
     mention: String,
-		duration: String,
     songs: String
 
 },{
