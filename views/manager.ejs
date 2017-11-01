@@ -80,6 +80,9 @@
           } %>
           </div>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#kontakt" role="tab">Kontaktpersoner for rigging</a>
+        </li>
       </ul>
 
       <!-- Tab panes -->
@@ -154,6 +157,41 @@
           </div>
           <% }
           } %>
+          <div class="tab-pane" id="kontakt" role="tabpanel">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                  <th>Epost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% var bandName = null;
+                for(var i = 0; i<band.length; i++){
+                  if(band[i].managerEpost == user.local.email){
+                    bandName = band[i].band;
+                  }
+                }
+
+                for(var j = 0; j<conc.length; j++){
+                  if(conc[j].artist == bandName){
+                    var searchLength = conc[j].rig.length;
+                    for(var k = 0; k<searchLength; k++){
+                      for(var l = 0; l<users.length; l++){
+                        if(users[l].local.name == conc[j].rig[k]){ %>
+                          <tr>
+                            <td> <%= users[l].local.name %> </td>
+                            <td> <%= users[l].local.email %> </td>
+                          </tr>
+                      <%  } %>
+                    <%  } %>
+                  <%  } %>
+                <%  } %>
+              <%  } %>
+            </tbody>
+          </table>
+
+          </div>
       </div>
     </div>
 
