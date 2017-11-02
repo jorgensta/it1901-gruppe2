@@ -82,7 +82,10 @@
             <tr>
               <td><%= conc[i].artist %></td>
               <td><%= conc[i].scene %></td>
-              <td><%= conc[i].mention %></td>
+              <td>
+                <%if(conc[i].mention == undefined) {%>
+                Ingen omtale lagt til</td> <%} else {%>
+                <%= conc[i].mention %></td> <%}%>
 
               <% for(var k = 0; k<info.length; k++){
                 if(conc[i].artist == info[k].band) {
