@@ -61,7 +61,7 @@
            } %>
       </p>
       <% if(message && message.length > 0){ %>
-        <div class="alert alert-success" style="width: 700px"> <%= message %> </div>
+        <div class="alert alert-success" style="width: 700px" id="flashbox"> <%= message %> </div>
     <%  } %>
 
       </header>
@@ -224,6 +224,11 @@
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/popper/popper.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    setTimeout(function(){
+      $('#flashbox').remove();
+  }, 5000);
+  </script>
 
   </body>
 
