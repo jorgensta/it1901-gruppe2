@@ -119,7 +119,8 @@
               <tr>
                 <th>Scene</th>
                 <th>Konsert</th>
-                <th>Tidspunkt</th>
+                <th>Dato</th>
+                <th>Tid</th>
                 <th>Beregnet billettpris</th>
                 <th>Avslå/Godkjenn</th>
               </tr>
@@ -134,7 +135,10 @@
                             <tr>
                                 <td><%=conc[i].scene%></td>
                                 <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
-                                <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>"><%=conc[i].start%></div></td>
+                                <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
+                                  <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
+                                  </div></td>
+                                <td><%=conc[i].start.slice(11)%></td>
                                 <td><%=conc[i].ticketPrice%></td>
                                 <td><button class="btn btn-danger btn-sm" formaction="/managerDecline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/managerApprove">Godkjenn</button></td>
 

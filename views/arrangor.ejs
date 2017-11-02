@@ -91,8 +91,10 @@
 				    <tr>
 				      <td><%= conc[i].scene %></td>
 				      <td><%= conc[i].artist %></td>
-				      <td><%= conc[i].date %></td>
-				      <td><%= conc[i].time %></td>
+				      <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
+								<%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
+								</div></td>
+							<td><%=conc[i].start.slice(11)%></td>
 				    </tr>
 				    <% }
 				    } %>
@@ -141,7 +143,7 @@
 			</div>
 			<% for(var i=0; i<conc.length; i++) { %>
           <%if(conc[i].approvedByManager && user.local.name == conc[i].arranger) {%>
-          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].date %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4) %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
           	<%= conc[i].songs %>
           </div>
           <% }
