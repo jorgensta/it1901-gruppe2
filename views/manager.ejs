@@ -60,6 +60,10 @@
           <% }
            } %>
       </p>
+      <% if(message && message.length > 0){ %>
+        <div class="alert alert-success" style="width: 700px"> <%= message %> </div>
+    <%  } %>
+
       </header>
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
@@ -161,6 +165,8 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>Scene</th>
+                  <th>Dato</th>
                   <th>Navn</th>
                   <th>Epost</th>
                 </tr>
@@ -180,6 +186,8 @@
                       for(var l = 0; l<users.length; l++){
                         if(users[l].local.name == conc[j].rig[k]){ %>
                           <tr>
+                            <td> <%= conc[j].scene %></td>
+                            <td> <%= conc[j].date %></td>
                             <td> <%= users[l].local.name %> </td>
                             <td> <%= users[l].local.email %> </td>
                           </tr>

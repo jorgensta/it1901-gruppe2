@@ -49,6 +49,9 @@
       <header class="jumbotron my-4">
         <h1 class="display-3">Booking-ansvarlig</h1>
         <p class="lead">Her kan sende inn bookingforespørsler og finne teknisk informasjon for konserter.</p>
+        <% if(message && message.length > 0){ %>
+          <div class="alert alert-success" style="width: 700px"> <%= message %> </div>
+      <%  } %>
       </header>
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">

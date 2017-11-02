@@ -15,6 +15,35 @@ module.exports = function(app,passport){
     res.render('index.ejs');
 
   });
+//flash messages to user based on which button is pressed
+  app.get('/book-flash', function(req,res){
+    req.flash('info', 'Du har nå sendt et bookingtilbud!');
+    res.redirect('/all');
+  })
+
+  app.get('/mention-flash', function(req,res){
+    req.flash('info', 'Omtale lagt til!');
+    res.redirect('/all');
+  })
+
+  app.get('/send-flash', function(req,res){
+    req.flash('info', 'Sendt/oppdatert tekniske behov!');
+    res.redirect('/all');
+  })
+  app.get('/decline-flash', function(req,res){
+    req.flash('info', 'Tilbud avslått!');
+    res.redirect('/all');
+  })
+
+  app.get('/approve-flash', function(req,res){
+    req.flash('info', 'Tilbud godkjent!');
+    res.redirect('/all');
+  })
+  app.get('/song-flash', function(req,res){
+    req.flash('info', 'Sanger oppdatert!');
+    res.redirect('/all');
+  })
+
 //renders login-in page
   app.get('/login', function(req, res){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
@@ -28,6 +57,7 @@ module.exports = function(app,passport){
 
 
   app.get('/all', isLoggedIn, function(req, res){
+
     console.log(req.user.local.role);
     //Get the user role from database which is in the req object that we get from express and passport
     let role = req.user.local.role;
@@ -35,21 +65,32 @@ module.exports = function(app,passport){
     //Query for finding all concerts, further manipulation of data is done in EJS template.
 
     if(role === 'tekniker' || role === 'arrangor'){
-      let mysort = { scene: 1 };
-      Concert.find(function (err, conc){
-        //if theres an error, log it
-        if(err){
-          console.log(err);
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('insert message here')
+                  });
+                }
+              })
+            }
+          })
         }
-        else {
-          //else, render correct page based on role, and send a list of every concert data over to EJS templates.
-          res.render(role + ejs, {
-            conc: conc,
-            user : req.user,
-            message: req.flash('signupMessage')
-          });
-        }
-      }).sort({scene: 1});
+      })
     }
 
     if(role === 'bookingAnsvarlig'){
@@ -71,7 +112,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('insert message here')
+                  message: req.flash('info')
                   });
                 }
               })
@@ -100,7 +141,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('insert message here')
+                  message: req.flash('info')
                   });
                 }
               })
@@ -129,7 +170,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('insert message here')
+                  message: req.flash('info')
                   });
                 }
               })
@@ -151,7 +192,7 @@ module.exports = function(app,passport){
                 info: info,
                 user: req.user,
                 conc: conc,
-                message: req.flash('insert message here')
+                message: req.flash('info')
               });
             }
           })
@@ -170,7 +211,7 @@ module.exports = function(app,passport){
                 info: info,
                 user: req.user,
                 conc: conc,
-                message: req.flash('insert message here')
+                message: req.flash('info')
               });
             }
           })
@@ -236,7 +277,7 @@ module.exports = function(app,passport){
         if (err) {
             res.redirect('/all');
         } else {
-            res.redirect('/all');
+            res.redirect('/send-flash');
         }
     })
   });
@@ -255,7 +296,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/approve-flash');
         }
     })
   });
@@ -271,7 +312,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/decline-flash');
         }
     })
   });
@@ -291,7 +332,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/approve-flash');
         }
     })
   });
@@ -307,7 +348,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/decline-flash');
         }
     })
   });
@@ -327,7 +368,8 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+
+            res.redirect('/mention-flash');
         }
     })
   });
@@ -346,7 +388,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/song-flash');
         }
     })
   });
@@ -370,7 +412,7 @@ module.exports = function(app,passport){
       if(err) {
         res.redirect('/all');
     }else{
-      res.redirect('/all');
+      res.redirect('/book-flash');
     }
 
     })

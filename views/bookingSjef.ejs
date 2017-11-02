@@ -49,6 +49,9 @@
       <header class="jumbotron my-4">
         <h1 class="display-3">Bookingsjef</h1>
         <p class="lead">Bookingtilbud, markedsinformasjon, billettrapporter.</p>
+        <% if(message && message.length > 0){ %>
+          <div class="alert alert-success" style="width: 700px"> <%= message %> </div>
+      <%  } %>
       </header>
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +65,7 @@
           <a class="nav-link" data-toggle="tab" href="#sentToManager" role="tab">Bookingtilbud sendt til band</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#marketInfo" role="tab">Markedsinformasjon</a>       
+          <a class="nav-link" data-toggle="tab" href="#marketInfo" role="tab">Markedsinformasjon</a>
         </li>
       </ul>
 
@@ -78,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <% for(var i=0; i<conc.length; i++) { 
+            <% for(var i=0; i<conc.length; i++) {
                 if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager) {
                   %>
             <tr>
@@ -104,7 +107,7 @@
               </tr>
             </thead>
             <tbody>
-              <% for(var i=0; i<conc.length; i++) { 
+              <% for(var i=0; i<conc.length; i++) {
                     if(conc[i].approvedByBookingSjef == false) {
                     %>
               <form action='/bookingSjef' method="POST">
@@ -133,7 +136,7 @@
               </tr>
             </thead>
             <tbody>
-              <% for(var i=0; i<conc.length; i++) { 
+              <% for(var i=0; i<conc.length; i++) {
                   if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == false) {
                     %>
               <tr>
@@ -143,12 +146,12 @@
             </tr>
             <% }
             } %>
-            </tbody>  
+            </tbody>
           </table>
         </div>
         <div class="tab-pane" id="marketInfo" role="tabpanel">
             T0D0
-            <!-- T0D0 
+            <!-- T0D0
                   enten tabell eller søkefunksjonalitet for å finne markedsinformasjon på ønskede band
             -->
         </div>
