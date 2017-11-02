@@ -180,14 +180,14 @@
                 }
 
                 for(var j = 0; j<conc.length; j++){
-                  if(conc[j].artist == bandName){
+                  if(conc[j].artist == bandName && conc[j].approvedByManager == true){
                     var searchLength = conc[j].rig.length;
                     for(var k = 0; k<searchLength; k++){
                       for(var l = 0; l<users.length; l++){
                         if(users[l].local.name == conc[j].rig[k]){ %>
                           <tr>
                             <td> <%= conc[j].scene %></td>
-                            <td> <%= conc[j].date %></td>
+                            <td> <%= conc[j].start %></td>
                             <td> <%= users[l].local.name %> </td>
                             <td> <%= users[l].local.email %> </td>
                           </tr>
