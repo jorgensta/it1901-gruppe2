@@ -50,7 +50,7 @@
         <h1 class="display-3">Booking-ansvarlig</h1>
         <p class="lead">Her kan sende inn bookingforespørsler og finne teknisk informasjon for konserter.</p>
         <% if(message && message.length > 0){ %>
-          <div class="alert alert-success" style="width: 700px"> <%= message %> </div>
+          <div class="alert alert-success" style="width: 700px" id="flashbox"> <%= message %> </div>
       <%  } %>
       </header>
       <!-- Nav tabs -->
@@ -271,7 +271,7 @@
       let minmin = today.getMinutes();
        if(dd<10){
               dd='0'+dd
-          } 
+          }
           if(mm<10){
               mm='0'+mm
           } if (minmin < 10){
@@ -297,6 +297,9 @@
         let newEndDate = y.toString() + i.slice(4);
         document.getElementById("enddate").setAttribute("max", newEndDate);
       }
+      setTimeout(function(){
+        $('#flashbox').remove();
+    }, 5000);
   </script>
   </body>
 

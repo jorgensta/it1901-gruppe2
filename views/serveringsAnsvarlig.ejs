@@ -65,6 +65,7 @@
             <tr>
               <th>Scene</th>
               <th>Konsert</th>
+              <th>Sjanger</th>
 
               <!-- T0D0 -->
 
@@ -83,6 +84,15 @@
             <tr>
                 <td><%= conc[i].scene %></td>
                 <td><%= conc[i].artist %></td>
+                <% for(var j = 0; j<info.length; j++){
+                  if(conc[i].artist == info[j].band){
+                    if(info[j].sjanger == undefined) { %>
+                      <td>Ingen sjanger</td>
+                      <% } else { %>
+                    <td> <%= info[j].sjanger %> </td>
+                    <% } %>
+                <%  } %>
+              <%  } %>
                 <td><%= conc[i].date %></td>
                 <td><%= conc[i].time %></td>
                 <!-- T0D0 -->
