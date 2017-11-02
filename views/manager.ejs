@@ -129,7 +129,7 @@
               <% for(var i=0; i<conc.length; i++) {
                     if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == false) {
                       for(var j=0; j<band.length; j++) {
-                        if(conc[i].artist == band[j].band) {
+                        if(conc[i].artist == band[j].band && band[j].managerEpost == user.local.email) {
                     %>
                           <form action='/bookingSjef' method="POST">
                             <tr>
