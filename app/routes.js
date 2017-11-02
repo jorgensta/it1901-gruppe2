@@ -15,7 +15,7 @@ module.exports = function(app,passport){
     res.render('index.ejs');
 
   });
-
+//flash messages to user based on which button is pressed
   app.get('/book-flash', function(req,res){
     req.flash('info', 'Du har nå sendt et bookingtilbud!');
     res.redirect('/all');
@@ -23,6 +23,24 @@ module.exports = function(app,passport){
 
   app.get('/mention-flash', function(req,res){
     req.flash('info', 'Omtale lagt til!');
+    res.redirect('/all');
+  })
+
+  app.get('/send-flash', function(req,res){
+    req.flash('info', 'Sendt/oppdatert tekniske behov!');
+    res.redirect('/all');
+  })
+  app.get('/decline-flash', function(req,res){
+    req.flash('info', 'Tilbud avslått!');
+    res.redirect('/all');
+  })
+
+  app.get('/approve-flash', function(req,res){
+    req.flash('info', 'Tilbud godkjent!');
+    res.redirect('/all');
+  })
+  app.get('/song-flash', function(req,res){
+    req.flash('info', 'Sanger oppdatert!');
     res.redirect('/all');
   })
 
@@ -123,7 +141,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('message', 'This is a message')
+                  message: req.flash('info')
                   });
                 }
               })
@@ -152,7 +170,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('message')
+                  message: req.flash('info')
                   });
                 }
               })
@@ -174,7 +192,7 @@ module.exports = function(app,passport){
                 info: info,
                 user: req.user,
                 conc: conc,
-                message: req.flash('message')
+                message: req.flash('info')
               });
             }
           })
@@ -193,7 +211,7 @@ module.exports = function(app,passport){
                 info: info,
                 user: req.user,
                 conc: conc,
-                message: req.flash('insert message here')
+                message: req.flash('info')
               });
             }
           })
@@ -259,7 +277,7 @@ module.exports = function(app,passport){
         if (err) {
             res.redirect('/all');
         } else {
-            res.redirect('/all');
+            res.redirect('/send-flash');
         }
     })
   });
@@ -278,7 +296,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/approve-flash');
         }
     })
   });
@@ -294,7 +312,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/decline-flash');
         }
     })
   });
@@ -314,7 +332,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/approve-flash');
         }
     })
   });
@@ -330,7 +348,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/decline-flash');
         }
     })
   });
@@ -370,7 +388,7 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+            res.redirect('/song-flash');
         }
     })
   });

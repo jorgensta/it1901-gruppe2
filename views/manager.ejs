@@ -60,6 +60,10 @@
           <% }
            } %>
       </p>
+      <% if(message && message.length > 0){ %>
+        <div class="alert alert-success" style="width: 700px"> <%= message %> </div>
+    <%  } %>
+
       </header>
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
