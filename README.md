@@ -6,7 +6,7 @@ Oppsett på mac/terminal
 2. Installer homebrew: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 3. Installer mongoDB: brew install mongodb
 4. Sett opp lokalt database directory: mkdir -p /data/db
-5. Sett rettigheter for mappen: sudo chown -R `id -un` /data/db
+5. Sett rettigheter for mappen: sudo chown -R \`id -un\` /data/db
 6. Start opp server, skriv dette i terminal-vindu: mongod
 7. Start et nytt terminal-vindu, start database med: mongo
 8. Skriv inn samme terminal-vindu: use schmuka
