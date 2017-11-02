@@ -35,21 +35,32 @@ module.exports = function(app,passport){
     //Query for finding all concerts, further manipulation of data is done in EJS template.
 
     if(role === 'tekniker' || role === 'arrangor'){
-      let mysort = { scene: 1 };
-      Concert.find(function (err, conc){
-        //if theres an error, log it
-        if(err){
-          console.log(err);
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('insert message here')
+                  });
+                }
+              })
+            }
+          })
         }
-        else {
-          //else, render correct page based on role, and send a list of every concert data over to EJS templates.
-          res.render(role + ejs, {
-            conc: conc,
-            user : req.user,
-            message: req.flash('signupMessage')
-          });
-        }
-      }).sort({scene: 1});
+      })
     }
 
     if(role === 'bookingAnsvarlig'){
