@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/">Hjem
+              <a class="nav-link"><%=user.local.name%>
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -66,11 +66,8 @@
               <th>Scene</th>
               <th>Konsert</th>
               <th>Sjanger</th>
-
-              <!-- T0D0 -->
-
-              <th>Konsertstart</th>
-              <th>Varighet</th>
+              <th>Starttidspunkt</th>
+              <th>Sluttidspunkt</th>
               <th>Forventet publikumsantall</th>
               <th>Innkjøpsberegning</th>
 
@@ -93,8 +90,8 @@
                     <% } %>
                 <%  } %>
               <%  } %>
-                <td><%= conc[i].date %></td>
-                <td><%= conc[i].time %></td>
+                <td><%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%><br><%=conc[i].start.slice(11)%></td>
+                <td><%=conc[i].end.slice(8,10)%>.<%=conc[i].end.slice(5,7)%>.<%=conc[i].end.slice(0,4)%><br><%=conc[i].end.slice(11)%></td>
                 <!-- T0D0 -->
                 <% if(conc[i].scene == "Dødens dal") { %>
                   <td> 4000 </td>

@@ -2,7 +2,7 @@ Rolle:			Epost:			Passord:
 Tekniker		gunnar@schmuka.no	gunnar
 Tekniker		petter@schmuka.no	petter
 Tekniker		aage@schmuka.no		aage
-Tekniker		geir@schmuka.no		geir
+Tekniker		geir@geir.no		geir
 Bookingansvarlig	magnus@schmuka.no	magnus
 Bookingansvarlig	ulrik@schmuka.no	ulrik
 Bookingsjef		jorgen@schmuka.no	jorgen

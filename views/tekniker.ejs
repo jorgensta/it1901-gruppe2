@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/">Hjem
+              <a class="nav-link"><%=user.local.name%>
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -53,7 +53,7 @@
 
       <!-- Jumbotron Header -->
       <header class="jumbotron my-4">
-        <h1 class="display-3">Tekniker <%= user.local.name %></h1>
+        <h1 class="display-3">Tekniker</h1>
         <p class="lead">Her kan du finne oversikt over alle konserter du skal jobbe med.</p>
       </header>
 	<!-- Nav tabs -->
@@ -126,7 +126,7 @@
                 </td>
                 <% for(var k=0; k<users.length; k++) {
                 	if(users[k].local.name == conc[i].arranger) { %>
-                	<td><a href="mailto:<%=users[k].local.email%>?Subject=Oppmøte%20for%20konsert:%20<%=conc[i].artist%>%20<%=conc[i].date%>" target="_top"><%=conc[i].arranger%></a></td>
+                	<td><a href="mailto:<%=users[k].local.email%>?Subject=Oppmøte%20for%20konsert:%20<%=conc[i].artist%>%20<%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>" target="_top"><%=conc[i].arranger%></a></td>
                 	<%}
                 	}%>
   					</tr>
