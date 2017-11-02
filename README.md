@@ -2,19 +2,16 @@
 
 Oppsett på mac/terminal
 
-1. Installer homebrew: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-2. Installer mongoDB: brew install mongodb
-3. Set opp lokalt database directory: mkdir -p /data/db
-4. Sett rettigheter for mappen: sudo chown -R `id -un` /data/db
-5. Start opp server, skrive dette i terminal-vindu: mongod 
-6. Start et nytt terminal-vindu, start database med: mongo
-7. skriv i terminalen etter punkt 6: use schmuka
-8. finn frem til directoryen til prosjektet, og skriv "node app.js" i terminalen for å kjøre programmet.
-9. Gå inn i webbrowseren på http://localhost:8080/
-
-
-
-
-Database skal nå være oppe å gå lokalt på localhost:27017
-
-Les lenker å slack
+1. Skriv inn dette i terminal: git clone https://github.com/jorgensta/it1901-gruppe2
+2. Installer homebrew: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+3. Installer mongoDB: brew install mongodb
+4. Sett opp lokalt database directory: mkdir -p /data/db
+5. Sett rettigheter for mappen: sudo chown -R `id -un` /data/db
+6. Start opp server, skriv dette i terminal-vindu: mongod
+7. Start et nytt terminal-vindu, start database med: mongo
+8. Skriv inn samme terminal-vindu: use schmuka
+9. Skriv deretter inn i samme terminal-vindu: db.schmuka.insert({"dummy":"dummy"})
+10. Last inn all dummydata ved å skrive dette i et nytt terminal-vindu: mongorestore -d schmuka it1901-gruppe2/db/schmuka
+11. Skriv inn dette i terminal: cd it1901-gruppe2
+12. Skriv inn dette i terminal: node app.js
+13. Gå inn i webbrowseren på http://localhost:8080/
