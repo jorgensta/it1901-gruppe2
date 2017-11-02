@@ -15,6 +15,17 @@ module.exports = function(app,passport){
     res.render('index.ejs');
 
   });
+
+  app.get('/book-flash', function(req,res){
+    req.flash('info', 'Du har nå sendt et bookingtilbud!');
+    res.redirect('/all');
+  })
+
+  app.get('/mention-flash', function(req,res){
+    req.flash('info', 'Omtale lagt til!');
+    res.redirect('/all');
+  })
+
 //renders login-in page
   app.get('/login', function(req, res){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
@@ -28,6 +39,7 @@ module.exports = function(app,passport){
 
 
   app.get('/all', isLoggedIn, function(req, res){
+
     console.log(req.user.local.role);
     //Get the user role from database which is in the req object that we get from express and passport
     let role = req.user.local.role;
@@ -82,7 +94,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('insert message here')
+                  message: req.flash('info')
                   });
                 }
               })
@@ -111,7 +123,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('insert message here')
+                  message: req.flash('message', 'This is a message')
                   });
                 }
               })
@@ -140,7 +152,7 @@ module.exports = function(app,passport){
                   user: req.user,
                   users: users,
                   conc: conc,
-                  message: req.flash('insert message here')
+                  message: req.flash('message')
                   });
                 }
               })
@@ -162,7 +174,7 @@ module.exports = function(app,passport){
                 info: info,
                 user: req.user,
                 conc: conc,
-                message: req.flash('insert message here')
+                message: req.flash('message')
               });
             }
           })
@@ -338,7 +350,8 @@ module.exports = function(app,passport){
             res.redirect('/bullcrap');
         } else {
             console.log(req.body.artistBooked);
-            res.redirect('/all');
+
+            res.redirect('/mention-flash');
         }
     })
   });
@@ -381,7 +394,7 @@ module.exports = function(app,passport){
       if(err) {
         res.redirect('/all');
     }else{
-      res.redirect('/all');
+      res.redirect('/book-flash');
     }
 
     })
