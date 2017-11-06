@@ -145,7 +145,10 @@
 			<% for(var i=0; i<conc.length; i++) { %>
           <%if(conc[i].approvedByManager && user.local.name == conc[i].arranger) {%>
           <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4) %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+          	<%if (conc[i].songs == undefined) {%>
+          		Manager har ikke lagt til sanger enda <%} else {%>
           	<%= conc[i].songs %>
+          	<%}%>
           </div>
           <% }
           } %>
