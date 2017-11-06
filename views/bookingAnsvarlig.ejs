@@ -76,7 +76,7 @@
           <% for(var i=0; i<conc.length; i++) {
               if(conc[i].approvedByManager == true) {
             %>
-            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %>, <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %> @ <%=conc[i].scene + " " + conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
           <% }
           } %>
           </div>
