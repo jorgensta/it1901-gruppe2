@@ -79,8 +79,8 @@
 			<table class="table">
 				  <thead>
 				    <tr>
+				      <th>Artist</th>
 				      <th>Scene</th>
-				      <th>Konsert</th>
 				      <th>Dato</th>
 				      <th>Tid</th>
 				    </tr>
@@ -90,8 +90,8 @@
 				  		if(conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
 				  	%>
 				    <tr>
-				      <td><%= conc[i].scene %></td>
 				      <td><%= conc[i].artist %></td>
+				      <td><%= conc[i].scene %></td>
 				      <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
 								<%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
 								</div></td>
@@ -106,8 +106,8 @@
 				<table class="table">
 				  <thead>
 				    <tr>
+				      <th>Artist</th>
 				      <th>Scene</th>
-				      <th>Konsert</th>
 				      <th>Dato</th>
 				      <th>Tid</th>
 				      <th>Lys</th>
@@ -120,8 +120,8 @@
               			if(user.local.name == conc[i].arranger && conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
               		%>
 				    <tr>
-				      	<td><%= conc[i].scene %></td>
 				      	<td><%= conc[i].artist %></td>
+				      	<td><%= conc[i].scene %></td>
 				      	<td><%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></td>
 				      	<td><%=conc[i].start.slice(11)%></td>
 		                <td><% for(var k=0; k<conc[i].lights.length; k++) { %>

@@ -80,7 +80,7 @@
           <% for(var i=0; i<conc.length; i++) {
               if(conc[i].approvedByManager == true && thisBand == conc[i].artist) {
             %>
-            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].scene %>, <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %> @ <%= conc[i].scene %>, <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
           <% }
           } %>
           </div>
@@ -118,8 +118,8 @@
           <table class="table">
             <thead>
               <tr>
+                <th>Artist</th>
                 <th>Scene</th>
-                <th>Konsert</th>
                 <th>Dato</th>
                 <th>Tid</th>
                 <th>Beregnet billettpris</th>
@@ -134,8 +134,8 @@
                     %>
                           <form action='/bookingSjef' method="POST">
                             <tr>
-                                <td><%=conc[i].scene%></td>
                                 <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
+                                <td><%=conc[i].scene%></td>                              
                                 <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
                                   <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
                                   </div></td>
@@ -161,7 +161,7 @@
                 <input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
                 <br>
                 <br>
-                <button type="submit" class="btn btn-primary">Oppdater/Legg inn sanger</button></td>
+                <button type="submit" class="btn btn-primary">Oppdater</button></td>
               </form>
           </div>
           <% }
@@ -170,6 +170,7 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>Artist</th>
                   <th>Scene</th>
                   <th>Dato</th>
                   <th>Navn</th>
@@ -191,6 +192,7 @@
                       for(var l = 0; l<users.length; l++){
                         if(users[l].local.name == conc[j].rig[k]){ %>
                           <tr>
+                            <td> <%= conc[j].artist %></td>
                             <td> <%= conc[j].scene %></td>
                             <td> <%=conc[j].start.slice(8,10)%>.<%=conc[j].start.slice(5,7)%>.<%=conc[j].start.slice(0,4)%></td>
                             <td> <%= users[l].local.name %> </td>
