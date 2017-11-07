@@ -18,8 +18,8 @@ let session = require('express-session');
 
 
 
-//let configDB = require('./database/database.js');//worthless
-  mongoose.connect('mongodb://localhost/schmuka');
+mongoose.connect('mongodb://localhost/schmuka');
+
 // configuration ===============================================================
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -28,26 +28,8 @@ let Concert = require(__dirname + '/app/models/concert');
 
 let Band = require(__dirname + '/app/models/band');
 
-/*
-function createData(){
-
-  let band = new Band();
-
-  band.managerEpost = 'jorgen@schmuka.no';
-  band.band = 'the jogges & the thorsnes';
-  band.teknisk = 'Vi trenger uendelig mengder med cola, masse potetgull og en 10 liter sprit. Noen er laktoseintolerante, så ikke kjøp melk og diverse produkter';
-
-  band.save(function(err){
-    if(err) throw err;
-
-    return done(null,band);
-  });
-};
 
 
-createData();
-
-*/
 
 app.use(express.static(__dirname + '/views'));
 

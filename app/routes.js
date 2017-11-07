@@ -27,7 +27,7 @@ module.exports = function(app,passport){
   })
 
   app.get('/send-flash', function(req,res){
-    req.flash('info', 'Sendt/oppdatert tekniske behov!');
+    req.flash('info', 'Sendt!');
     res.redirect('/all');
   })
   app.get('/decline-flash', function(req,res){
@@ -48,13 +48,6 @@ module.exports = function(app,passport){
   app.get('/login', function(req, res){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
-
-  /*  DELETE ? denne er vel unødvendig etter /all
-  app.get('/manager', function(req,res){
-    res.render('manager.ejs', {message: req.flash('managerMessage')});
-  });
-  */
-
 
   app.get('/all', isLoggedIn, function(req, res){
 
@@ -264,7 +257,7 @@ module.exports = function(app,passport){
   app.post('/manager', function(req,res){
 
     Band.findOneAndUpdate(
-    { $or:  [{band: req.body.band}, {managerEpost: req.body.managerEpost}]}, // find a document with that filter or create a new, if nothing is found
+    { $and:  [{band: req.body.band}, {managerEpost: req.body.managerEpost}]}, // find a document with that filter or create a new, if nothing is found
     {
       managerEpost: req.body.managerEpost,
       band: req.body.band,
@@ -293,7 +286,7 @@ module.exports = function(app,passport){
     function (err, doc) { // callback
         if (err) {
             console.log(req.body.artistBooked);
-            res.redirect('/bullcrap');
+            res.redirect('/error');
         } else {
             console.log(req.body.artistBooked);
             res.redirect('/approve-flash');

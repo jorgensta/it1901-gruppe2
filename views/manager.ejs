@@ -21,7 +21,6 @@
 
   <body>
 
-    <!-- LOGIN FORM -->
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -52,14 +51,38 @@
       <!-- Jumbotron Header -->
       <header class="jumbotron my-4">
         <h1 class="display-3">Manager</h1>
-        <p class="lead">Her kan du melde inn tekniske behov for
-          <% var thisBand = null;
+        <p class="lead">Her kan du melde inn tekniske behov for:
+          
+          <% 
+          var managesBand = [];
+
           for(var i=0; i<band.length; i++) {
-                if(band[i].managerEpost == user.local.email) { %>
-                  <%=band[i].band%>
-                  <%thisBand = band[i].band;%>
-          <% }
-           } %>
+              if(band[i].managerEpost == user.local.email) {
+                managesBand.push(band[i].band)
+              }
+          }
+
+          numberOfBands = managesBand.length;
+          bandStringArray = []
+          for(var j=0; j<managesBand.length; j++){
+            if(j > 0 && j == numberOfBands-1){
+              bandStringArray.push(" og ");
+            }
+            if(j > 0 && j < numberOfBands-1){
+              bandStringArray.push(", ");
+            }
+            bandStringArray.push(managesBand[j]);
+            
+          }
+          
+          bandString = "";
+          for(var k=0; k<bandStringArray.length; k++){
+            bandString = bandString += bandStringArray[k];
+          }
+
+          %>
+
+          <%= bandString %>
       </p>
       <% if(message && message.length > 0){ %>
         <div class="alert alert-success" style="width: 700px" id="flashbox"> <%= message %> </div>
@@ -78,7 +101,7 @@
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn sanger for konsert</a>
           <div class="dropdown-menu">
           <% for(var i=0; i<conc.length; i++) {
-              if(conc[i].approvedByManager == true && thisBand == conc[i].artist) {
+              if(conc[i].approvedByManager == true && managesBand.includes(conc[i].artist)) {
             %>
             <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %> @ <%= conc[i].scene %>, <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
           <% }
@@ -87,6 +110,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#kontakt" role="tab">Kontaktpersoner for rigging</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#addArtist" role="tab">Registrer et nytt band</a>
         </li>
       </ul>
 
@@ -98,10 +124,16 @@
               <label for="Epost">Din epost:</label>
               <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>">
             </div>
+            
             <div class="form-group">
-              <label for="formGroupExampleInput">Band/Artist:</label>
-              <input type="text" class="form-control" name="band" value="<%for(var i=0;i<band.length;i++){if(band[i].managerEpost==user.local.email){%><%=band[i].band%><%}}%>"><!--must be like this to remove whitespace -->
+              <label for="artistPick">Dine artister</label>
+              <select class="form-control" name="band" id="exampleFormControlSelect1">
+                <% for (var i = 0; i < managesBand.length; i++) { %>
+                  <option value="<%=managesBand[i]%>"><%=managesBand[i]%></option>
+                <% } %>
+              </select>
             </div>
+            
             <div class="form-group">
               <label for="Epost">Sjanger:</label>
               <input type="text" class="form-control" name="sjanger" placeholder="Skriv inn sjanger">
@@ -153,7 +185,7 @@
           </table>
         </div>
         <% for(var i=0; i<conc.length; i++) { %>
-          <%if(conc[i].approvedByManager && thisBand == conc[i].artist) {%>
+          <%if(conc[i].approvedByManager && managesBand.includes(conc[i].artist)) {%>
           <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
              <form action='/addSongs' method="POST">
                 <textarea class="form-control" name="songs" rows="12" <% if(!conc[i].songs) { %> placeholder="Skriv inn sanger"></textarea> <% } else { %> ><%=conc[i].songs%></textarea> <% } %>
@@ -173,21 +205,18 @@
                   <th>Artist</th>
                   <th>Scene</th>
                   <th>Dato</th>
-                  <th>Navn</th>
-                  <th>Epost</th>
+                  <th>Ansvarlige for rigging</th>
+                  <th>Epost til ansvarlige for rigging</th>
                 </tr>
               </thead>
               <tbody>
-                <% var bandName = null;
-                for(var i = 0; i<band.length; i++){
-                  if(band[i].managerEpost == user.local.email){
-                    bandName = band[i].band;
-                  }
-                }
 
+                <% 
                 for(var j = 0; j<conc.length; j++){
-                  if(conc[j].artist == bandName && conc[j].approvedByManager == true){
-                    var searchLength = conc[j].rig.length;
+                  if(managesBand.includes(conc[j].artist)){
+                    var searchLength = conc[j].rig.length;%>
+
+                    <%
                     for(var k = 0; k<searchLength; k++){
                       for(var l = 0; l<users.length; l++){
                         if(users[l].local.name == conc[j].rig[k]){ %>
@@ -207,8 +236,30 @@
           </table>
 
           </div>
+          <!-- Legg til artister -->
+          <div class="tab-pane" id="addArtist" role="tabpanel">
+            <form action='/manager' method="POST">
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="managerEpost" value="<%= user.local.email %>">
+            </div>
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="sjanger" value="">
+            </div>
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="teknisk" value="">
+            </div>
+            
+            <div class="form-group">
+              <label for="Epost">Band:</label>
+              <input type="text" class="form-control" name="band" placeholder="Skriv inn bandnavn">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send</button>
+            </form>
       </div>
+
     </div>
+  </div>
 
 
 
@@ -234,8 +285,8 @@
     <script>
     setTimeout(function(){
       $('#flashbox').remove();
-  }, 5000);
-  </script>
+    }, 5000);
+    </script>
 
   </body>
 
