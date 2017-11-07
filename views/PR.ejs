@@ -66,6 +66,7 @@
             <tr>
               <th>Artist</th>
               <th>Scene</th>
+              <th>Dato</th>
               <th>Omtale</th>
               <th>Kontaktinformasjon</th>
               <!-- T0D0 -->
@@ -79,6 +80,7 @@
             <tr>
               <td><%= conc[i].artist %></td>
               <td><%= conc[i].scene %></td>
+              <td><%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></td>
               <td>
                 <%if(conc[i].mention == undefined) {%>
                 Ingen omtale lagt til</td> <%} else {%>
