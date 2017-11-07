@@ -122,7 +122,7 @@
           <form action='/manager' method="POST">
             <div class="form-group">
               <label for="Epost">Din epost:</label>
-              <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>">
+              <input disabled="true" type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>">
             </div>
             
             <div class="form-group">
@@ -214,22 +214,29 @@
                 <% 
                 for(var j = 0; j<conc.length; j++){
                   if(managesBand.includes(conc[j].artist)){
-                    var searchLength = conc[j].rig.length;%>
+                %>
 
                     <%
+                    var searchLength = conc[j].rig.length;
+                    var usernames = [];
+                    var emails = [];
                     for(var k = 0; k<searchLength; k++){
                       for(var l = 0; l<users.length; l++){
-                        if(users[l].local.name == conc[j].rig[k]){ %>
+                        if(users[l].local.name == conc[j].rig[k]){ 
+                          usernames.push(" " + users[l].local.name);
+                          emails.push(" " + users[l].local.email);
+                        } 
+                      }
+                    }
+                    %>
+
                           <tr>
                             <td> <%= conc[j].artist %></td>
                             <td> <%= conc[j].scene %></td>
                             <td> <%=conc[j].start.slice(8,10)%>.<%=conc[j].start.slice(5,7)%>.<%=conc[j].start.slice(0,4)%></td>
-                            <td> <%= users[l].local.name %> </td>
-                            <td> <%= users[l].local.email %> </td>
+                            <td> <%= usernames %> </td>
+                            <td> <%= emails %> </td>
                           </tr>
-                      <%  } %>
-                    <%  } %>
-                  <%  } %>
                 <%  } %>
               <%  } %>
             </tbody>
