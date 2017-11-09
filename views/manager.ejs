@@ -52,8 +52,8 @@
       <header class="jumbotron my-4">
         <h1 class="display-3">Manager</h1>
         <p class="lead">Her kan du melde inn tekniske behov for:
-
-          <%
+          
+          <% 
           var managesBand = [];
 
           for(var i=0; i<band.length; i++) {
@@ -72,9 +72,9 @@
               bandStringArray.push(", ");
             }
             bandStringArray.push(managesBand[j]);
-
+            
           }
-
+          
           bandString = "";
           for(var k=0; k<bandStringArray.length; k++){
             bandString = bandString += bandStringArray[k];
@@ -83,7 +83,7 @@
           %>
 
           <%= bandString %>
-      <br>Du kan også se hvilke bookingtilbud som er sendt til deg, legge inn sanger som skal bli spilt på en konsert, og registrere et nytt band til festivalen.</p>
+      <br><br>Du kan også se hvilke bookingtilbud som er sendt til deg, legge inn sanger som skal bli spilt på en konsert, og registrere et nytt band til festivalen.</p>
       <% if(message && message.length > 0){ %>
         <div class="alert alert-success" style="width: 700px" id="flashbox"> <%= message %> </div>
     <%  } %>
@@ -92,10 +92,18 @@
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#teknisk" role="tab">Send eller oppdater teknisk info</a>
+          <a class="nav-link active" data-toggle="tab" href="#pending" role="tab">Bookingtilbud</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#pending" role="tab">Bookingtilbud</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn teknisk informasjon</a>
+          <div class="dropdown-menu">
+          <% for(var i=0; i<band.length; i++) {
+              if(managesBand.includes(band[i].band)) {
+            %>
+            <a class="dropdown-item" data-toggle="tab" href="#bandTekniskID-<%= i %>"><%= band[i].band %></a>
+          <% }
+          } %>
+          </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn sanger for konsert</a>
@@ -118,35 +126,7 @@
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane active" id="teknisk" role="tabpanel">
-          <form action='/manager' method="POST">
-            <div class="form-group">
-              <label for="Epost">Din epost:</label>
-              <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>" readonly>
-            </div>
-
-            <div class="form-group">
-              <label for="artistPick">Dine artister</label>
-              <select class="form-control" name="band" id="exampleFormControlSelect1">
-                <% for (var i = 0; i < managesBand.length; i++) { %>
-                  <option value="<%=managesBand[i]%>"><%=managesBand[i]%></option>
-                <% } %>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="Epost">Sjanger:</label>
-              <input type="text" class="form-control" name="sjanger" placeholder="Skriv inn sjanger" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleTextarea">Tekniske behov:</label>
-              <textarea class="form-control" name="teknisk" rows="12" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Send</button>
-            </form>
-        </div>
-
-        <div class="tab-pane" id="pending" role="tabpanel">
+        <div class="tab-pane active" id="pending" role="tabpanel">
           <table class="table">
             <thead>
               <tr>
@@ -167,7 +147,7 @@
                           <form action='/bookingSjef' method="POST">
                             <tr>
                                 <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
-                                <td><%=conc[i].scene%></td>
+                                <td><%=conc[i].scene%></td>                              
                                 <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
                                   <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
                                   </div></td>
@@ -184,6 +164,26 @@
             </tbody>
           </table>
         </div>
+
+        <% for(var i=0; i<band.length; i++) { %>
+          <%if(managesBand.includes(band[i].band)) {%>
+          <div class="tab-pane" id="bandTekniskID-<%= i %>" role="tabpanel"><br><b> Band: </b> 
+            <form action='/manager' method="POST">
+                <input type="text" class="form-control" name="band" value="<%=band[i].band%>" readonly> </br>
+                <b> Din epost: </b>
+                <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>" readonly> </br>
+                <b>Sjanger:</b>
+                <input type="text" class="form-control" name="sjanger" <% if(!band[i].sjanger) { %> placeholder="Skriv inn sjanger"> <% } else { %> value="<%=band[i].sjanger%>"> <% } %>
+                <br>
+                <b>Teknisk informasjon:</b>
+                <textarea class="form-control" name="teknisk" rows="12" <% if(!band[i].teknisk) { %> placeholder="Skriv inn teknisk informasjon"></textarea> <% } else { %> ><%=band[i].teknisk%></textarea> <% } %>
+                <br>
+                <button type="submit" class="btn btn-primary">Oppdater</button></td>
+              </form>
+          </div>
+          <% }
+          } %>
+
         <% for(var i=0; i<conc.length; i++) { %>
           <%if(conc[i].approvedByManager && managesBand.includes(conc[i].artist)) {%>
           <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
@@ -211,9 +211,9 @@
               </thead>
               <tbody>
 
-                <%
+                <% 
                 for(var j = 0; j<conc.length; j++){
-                  if(managesBand.includes(conc[j].artist)){
+                  if(managesBand.includes(conc[j].artist) && conc[j].approvedByManager == true){
                 %>
 
                     <%
@@ -222,10 +222,10 @@
                     var emails = [];
                     for(var k = 0; k<searchLength; k++){
                       for(var l = 0; l<users.length; l++){
-                        if(users[l].local.name == conc[j].rig[k]){
+                        if(users[l].local.name == conc[j].rig[k]){ 
                           usernames.push(" " + users[l].local.name);
                           emails.push(" " + users[l].local.email);
-                        }
+                        } 
                       }
                     }
                     %>
@@ -255,10 +255,10 @@
             <div class="form-group">
               <input type="hidden" class="form-control" name="teknisk" value="">
             </div>
-
+            
             <div class="form-group">
               <label for="Epost">Band:</label>
-              <input type="text" class="form-control" name="band" placeholder="Skriv inn bandnavn" required>
+              <input type="text" class="form-control" name="band" placeholder="Skriv inn bandnavn">
             </div>
 
             <button type="submit" class="btn btn-primary">Send</button>
