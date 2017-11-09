@@ -52,8 +52,8 @@
       <header class="jumbotron my-4">
         <h1 class="display-3">Manager</h1>
         <p class="lead">Her kan du melde inn tekniske behov for:
-          
-          <% 
+
+          <%
           var managesBand = [];
 
           for(var i=0; i<band.length; i++) {
@@ -72,9 +72,9 @@
               bandStringArray.push(", ");
             }
             bandStringArray.push(managesBand[j]);
-            
+
           }
-          
+
           bandString = "";
           for(var k=0; k<bandStringArray.length; k++){
             bandString = bandString += bandStringArray[k];
@@ -124,7 +124,7 @@
               <label for="Epost">Din epost:</label>
               <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>" readonly>
             </div>
-            
+
             <div class="form-group">
               <label for="artistPick">Dine artister</label>
               <select class="form-control" name="band" id="exampleFormControlSelect1">
@@ -133,14 +133,14 @@
                 <% } %>
               </select>
             </div>
-            
+
             <div class="form-group">
               <label for="Epost">Sjanger:</label>
-              <input type="text" class="form-control" name="sjanger" placeholder="Skriv inn sjanger">
+              <input type="text" class="form-control" name="sjanger" placeholder="Skriv inn sjanger" required>
             </div>
             <div class="form-group">
               <label for="exampleTextarea">Tekniske behov:</label>
-              <textarea class="form-control" name="teknisk" rows="12"></textarea>
+              <textarea class="form-control" name="teknisk" rows="12" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Send</button>
             </form>
@@ -167,7 +167,7 @@
                           <form action='/bookingSjef' method="POST">
                             <tr>
                                 <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
-                                <td><%=conc[i].scene%></td>                              
+                                <td><%=conc[i].scene%></td>
                                 <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
                                   <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
                                   </div></td>
@@ -211,7 +211,7 @@
               </thead>
               <tbody>
 
-                <% 
+                <%
                 for(var j = 0; j<conc.length; j++){
                   if(managesBand.includes(conc[j].artist)){
                 %>
@@ -222,10 +222,10 @@
                     var emails = [];
                     for(var k = 0; k<searchLength; k++){
                       for(var l = 0; l<users.length; l++){
-                        if(users[l].local.name == conc[j].rig[k]){ 
+                        if(users[l].local.name == conc[j].rig[k]){
                           usernames.push(" " + users[l].local.name);
                           emails.push(" " + users[l].local.email);
-                        } 
+                        }
                       }
                     }
                     %>
@@ -255,10 +255,10 @@
             <div class="form-group">
               <input type="hidden" class="form-control" name="teknisk" value="">
             </div>
-            
+
             <div class="form-group">
               <label for="Epost">Band:</label>
-              <input type="text" class="form-control" name="band" placeholder="Skriv inn bandnavn">
+              <input type="text" class="form-control" name="band" placeholder="Skriv inn bandnavn" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Send</button>
