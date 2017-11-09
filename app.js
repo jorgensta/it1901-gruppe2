@@ -18,13 +18,17 @@ let session = require('express-session');
 
 
 
-//let configDB = require('./database/database.js');//worthless
-
 mongoose.connect('mongodb://localhost/schmuka');
 
 // configuration ===============================================================
 
 require('./config/passport')(passport); // pass passport for configuration
+
+let Concert = require(__dirname + '/app/models/concert');
+
+let Band = require(__dirname + '/app/models/band');
+
+
 
 
 app.use(express.static(__dirname + '/views'));
@@ -45,7 +49,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport,mongoose); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
 app.listen(port);

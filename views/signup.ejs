@@ -2,14 +2,23 @@
 <!doctype html>
 <html>
 <head>
-    <title>Node Authentication</title>
+    <title>Schmuka - Signup</title>
+    <link rel="shortcut icon" type="image/png" href="schmukaLogoFavicon.png"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <style>
         body        { padding-top:80px; }
+        img {
+            display: block;
+            margin: auto;
+            width: 20%;
+        }
     </style>
 </head>
 <body>
+<div class="img">
+    <img src="schmukaLogoTransparent.png">
+</div>
 <div class="container">
 
 <div class="col-sm-6 col-sm-offset-3">
@@ -24,12 +33,30 @@
     <!-- LOGIN FORM -->
     <form action="/signup" method="post">
         <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" name="email">
         </div>
         <div class="form-group">
             <label>Password</label>
             <input type="password" class="form-control" name="password">
+        </div>
+        <div class="form-group">
+            <label>Role</label>
+            <select class = "selectpicker" name="role">
+              <option class="form-control" value="manager">Manager</option>
+              <option class="form-control" value="bookingAnsvarlig">Bookingansvarlig</option>
+              <option class="form-control" value="bookingSjef">Bookingsjef</option>
+              <option class="form-control" value="serveringsAnsvarlig">Serveringsansvarlig</option>
+              <option class="form-control" value="tekniker">Lystekniker</option>
+              <option class="form-control" value="tekniker">Riggingsmedarbeider</option>
+              <option class="form-control" value="tekniker">Lydtekniker</option>
+              <option class="form-control" value="arrangor">Konsertarrangør</option>
+              <option class="form-control" value="PR">PR-ansvarlig</option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-warning btn-lg">Signup</button>

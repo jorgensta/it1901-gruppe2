@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="schmukaLogoFavicon.png"/>
+
+    <title>Schmuka - PR-ansvarlig</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href= "vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"><img src="schmukaLogoKnappTransparent.png" width=75px></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link"><%=user.local.name%>
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logg ut</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Jumbotron Header -->
+      <header class="jumbotron my-4">
+        <h1 class="display-3">PR-ansvarlig</h1>
+        <p class="lead">Her finner du en oversikt over band som skal spille på festivalen, og en omtale om bandene.</p>
+      </header>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#konsert" role="tab">Alle konserter</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="konsert" role="tabpanel">
+          <table class="table">
+          <thead>
+            <tr>
+              <th>Artist</th>
+              <th>Scene</th>
+              <th>Dato</th>
+              <th>Omtale</th>
+              <th>Kontaktinformasjon</th>
+              <!-- T0D0 -->
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<conc.length; i++) {
+                if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == true) {
+                  %>
+
+            <tr>
+              <td><%= conc[i].artist %></td>
+              <td><%= conc[i].scene %></td>
+              <td><%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></td>
+              <td>
+                <%if(conc[i].mention == undefined) {%>
+                Ingen omtale lagt til</td> <%} else {%>
+                <%= conc[i].mention %></td> <%}%>
+
+              <% for(var k = 0; k<info.length; k++){
+                if(conc[i].artist == info[k].band) {
+                  %>
+                  <td><%= info[k].managerEpost %></td>
+                <% } %>
+                <% } %>
+          </tr>
+          <% }
+          } %>
+          </tbody>
+        </table>
+        </div>
+          <div class="tab-pane" id="booking" role="tabpanel">
+          </div>
+      </div>
+  	</div>
+
+	</br>
+	</br>
+	</br>
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark footer">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Schmuka 2017</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/popper/popper.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+     <script src="https://cdn of underscore"></script>
+
+  </body>
+
+</html>

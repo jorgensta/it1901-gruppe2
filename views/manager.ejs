@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="schmukaLogoFavicon.png"/>
+
+    <title>Schmuka - Manager</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href= "vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"><img src="schmukaLogoKnappTransparent.png" width=75px></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link"><%=user.local.name%>
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logg ut</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Jumbotron Header -->
+      <header class="jumbotron my-4">
+        <h1 class="display-3">Manager</h1>
+        <p class="lead">Her kan du melde inn tekniske behov for:
+          
+          <% 
+          var managesBand = [];
+
+          for(var i=0; i<band.length; i++) {
+              if(band[i].managerEpost == user.local.email) {
+                managesBand.push(band[i].band)
+              }
+          }
+
+          numberOfBands = managesBand.length;
+          bandStringArray = []
+          for(var j=0; j<managesBand.length; j++){
+            if(j > 0 && j == numberOfBands-1){
+              bandStringArray.push(" og ");
+            }
+            if(j > 0 && j < numberOfBands-1){
+              bandStringArray.push(", ");
+            }
+            bandStringArray.push(managesBand[j]);
+            
+          }
+          
+          bandString = "";
+          for(var k=0; k<bandStringArray.length; k++){
+            bandString = bandString += bandStringArray[k];
+          }
+
+          %>
+
+          <%= bandString %>
+      <br><br>Du kan også se hvilke bookingtilbud som er sendt til deg, legge inn sanger som skal bli spilt på en konsert, og registrere et nytt band til festivalen.</p>
+      <% if(message && message.length > 0){ %>
+        <div class="alert alert-success" style="width: 700px" id="flashbox"> <%= message %> </div>
+    <%  } %>
+
+      </header>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#pending" role="tab">Bookingtilbud</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn teknisk informasjon</a>
+          <div class="dropdown-menu">
+          <% for(var i=0; i<band.length; i++) {
+              if(managesBand.includes(band[i].band)) {
+            %>
+            <a class="dropdown-item" data-toggle="tab" href="#bandTekniskID-<%= i %>"><%= band[i].band %></a>
+          <% }
+          } %>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Legg inn sanger for konsert</a>
+          <div class="dropdown-menu">
+          <% for(var i=0; i<conc.length; i++) {
+              if(conc[i].approvedByManager == true && managesBand.includes(conc[i].artist)) {
+            %>
+            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %> @ <%= conc[i].scene %>, <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
+          <% }
+          } %>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#kontakt" role="tab">Kontaktpersoner for rigging</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#addArtist" role="tab">Registrer et nytt band</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="pending" role="tabpanel">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Artist</th>
+                <th>Scene</th>
+                <th>Dato</th>
+                <th>Tid</th>
+                <th>Beregnet billettpris</th>
+                <th>Avslå/Godkjenn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i<conc.length; i++) {
+                    if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager == false) {
+                      for(var j=0; j<band.length; j++) {
+                        if(conc[i].artist == band[j].band && band[j].managerEpost == user.local.email) {
+                    %>
+                          <form action='/bookingSjef' method="POST">
+                            <tr>
+                                <td><div class="form-group"><input type="hidden" name="artistBooked" value="<%=conc[i].artist%>"><%=conc[i].artist%></div></td>
+                                <td><%=conc[i].scene%></td>                              
+                                <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
+                                  <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
+                                  </div></td>
+                                <td><%=conc[i].start.slice(11)%></td>
+                                <td><%=conc[i].ticketPrice%></td>
+                                <td><button class="btn btn-danger btn-sm" formaction="/managerDecline">Avslå</button>&nbsp&nbsp<button type="submit" class="btn btn-success btn-sm" formaction="/managerApprove">Godkjenn</button></td>
+
+                            </tr>
+                          </form>
+                <%    }
+                    }
+                  }
+                } %>
+            </tbody>
+          </table>
+        </div>
+
+        <% for(var i=0; i<band.length; i++) { %>
+          <%if(managesBand.includes(band[i].band)) {%>
+          <div class="tab-pane" id="bandTekniskID-<%= i %>" role="tabpanel"><br><b> Band: </b> 
+            <form action='/manager' method="POST">
+                <input type="text" class="form-control" name="band" value="<%=band[i].band%>" readonly> </br>
+                <b> Din epost: </b>
+                <input type="text" class="form-control" name="managerEpost" value="<%= user.local.email %>" readonly> </br>
+                <b>Sjanger:</b>
+                <input type="text" class="form-control" name="sjanger" <% if(!band[i].sjanger) { %> placeholder="Skriv inn sjanger"> <% } else { %> value="<%=band[i].sjanger%>"> <% } %>
+                <br>
+                <b>Teknisk informasjon:</b>
+                <textarea class="form-control" name="teknisk" rows="12" <% if(!band[i].teknisk) { %> placeholder="Skriv inn teknisk informasjon"></textarea> <% } else { %> ><%=band[i].teknisk%></textarea> <% } %>
+                <br>
+                <button type="submit" class="btn btn-primary">Oppdater</button></td>
+              </form>
+          </div>
+          <% }
+          } %>
+
+        <% for(var i=0; i<conc.length; i++) { %>
+          <%if(conc[i].approvedByManager && managesBand.includes(conc[i].artist)) {%>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+             <form action='/addSongs' method="POST">
+                <textarea class="form-control" name="songs" rows="12" <% if(!conc[i].songs) { %> placeholder="Skriv inn sanger"></textarea> <% } else { %> ><%=conc[i].songs%></textarea> <% } %>
+                <input type="hidden" name="artistBooked" value="<%=conc[i].artist%>">
+                <input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Oppdater</button></td>
+              </form>
+          </div>
+          <% }
+          } %>
+          <div class="tab-pane" id="kontakt" role="tabpanel">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Artist</th>
+                  <th>Scene</th>
+                  <th>Dato</th>
+                  <th>Ansvarlige for rigging</th>
+                  <th>Epost til ansvarlige for rigging</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <% 
+                for(var j = 0; j<conc.length; j++){
+                  if(managesBand.includes(conc[j].artist) && conc[j].approvedByManager == true){
+                %>
+
+                    <%
+                    var searchLength = conc[j].rig.length;
+                    var usernames = [];
+                    var emails = [];
+                    for(var k = 0; k<searchLength; k++){
+                      for(var l = 0; l<users.length; l++){
+                        if(users[l].local.name == conc[j].rig[k]){ 
+                          usernames.push(" " + users[l].local.name);
+                          emails.push(" " + users[l].local.email);
+                        } 
+                      }
+                    }
+                    %>
+
+                          <tr>
+                            <td> <%= conc[j].artist %></td>
+                            <td> <%= conc[j].scene %></td>
+                            <td> <%=conc[j].start.slice(8,10)%>.<%=conc[j].start.slice(5,7)%>.<%=conc[j].start.slice(0,4)%></td>
+                            <td> <%= usernames %> </td>
+                            <td> <%= emails %> </td>
+                          </tr>
+                <%  } %>
+              <%  } %>
+            </tbody>
+          </table>
+
+          </div>
+          <!-- Legg til artister -->
+          <div class="tab-pane" id="addArtist" role="tabpanel">
+            <form action='/manager' method="POST">
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="managerEpost" value="<%= user.local.email %>">
+            </div>
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="sjanger" value="">
+            </div>
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="teknisk" value="">
+            </div>
+            
+            <div class="form-group">
+              <label for="Epost">Band:</label>
+              <input type="text" class="form-control" name="band" placeholder="Skriv inn bandnavn">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+	</br>
+	</br>
+	</br>
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark footer">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Schmuka 2017</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/popper/popper.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    setTimeout(function(){
+      $('#flashbox').remove();
+    }, 5000);
+    </script>
+
+  </body>
+
+</html>

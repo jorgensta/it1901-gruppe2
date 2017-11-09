@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="schmukaLogoFavicon.png"/>
 
-    <title>Schmuka</title>
+    <title>Schmuka - Arrangør</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,19 +24,19 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Schmuka</a>
+        <a class="navbar-brand" href="#"><img src="schmukaLogoKnappTransparent.png" width=75px></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/">Hjem
+              <a class="nav-link"><%=user.local.name%>
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Logg ut</a>
+              <a class="nav-link" href="/logout">Logg ut</a>
             </li>
           </ul>
         </div>
@@ -48,7 +49,7 @@
       <!-- Jumbotron Header -->
       <header class="jumbotron my-4">
         <h1 class="display-3">Konsertarrangør</h1>
-        <p class="lead">Her kan du finne oversikt over alle konserter, konserter du arrangerer, og teknisk personell for disse konsertene.</p>
+        <p class="lead">Her kan du finne oversikt over alle konserter, konserter du arrangerer, teknisk personell for disse konsertene, og se hvilke sanger som skal spilles på en konsert.</p>
       </header>
 
 	<!-- Nav tabs -->
@@ -57,8 +58,19 @@
 				<a class="nav-link active" data-toggle="tab" href="#home" role="tab">Alle konserter</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#profile" role="tab">Dine konserter</a>
+				<a class="nav-link" data-toggle="tab" href="#profile" role="tab">Konserter du arrangerer</a>
 			</li>
+			<li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sanger som skal spilles</a>
+	          <div class="dropdown-menu">
+	          <% for(var i=0; i<conc.length; i++) {
+	              if(conc[i].approvedByManager == true && user.local.name == conc[i].arranger) {
+	            %>
+	            <a class="dropdown-item" data-toggle="tab" href="#bandMentionID-<%= i %>"><%= conc[i].artist %> @ <%=conc[i].scene + " " + conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></a>
+	          <% }
+	          } %>
+	          </div>
+	        </li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -67,31 +79,26 @@
 			<table class="table">
 				  <thead>
 				    <tr>
+				      <th>Artist</th>
 				      <th>Scene</th>
-				      <th>Konsert</th>
 				      <th>Dato</th>
 				      <th>Tid</th>
 				    </tr>
 				  </thead>
 				  <tbody>
+				  	<% for(var i=0; i<conc.length; i++) { 
+				  		if(conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
+				  	%>
 				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Death by Unga Bunga and the copters</td>
-				      <td>14.09</td>
-				      <td>24:00</td>
+				      <td><%= conc[i].artist %></td>
+				      <td><%= conc[i].scene %></td>
+				      <td><div class="form-group"><input type="hidden" name="dateBooked" value="<%=conc[i].start%>">
+								<%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%>
+								</div></td>
+							<td><%=conc[i].start.slice(11)%></td>
 				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Highasakite</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>lalala</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				    </tr>
+				    <% }
+				    } %>
 				  </tbody>
 				</table>
 			</div>
@@ -99,8 +106,8 @@
 				<table class="table">
 				  <thead>
 				    <tr>
+				      <th>Artist</th>
 				      <th>Scene</th>
-				      <th>Konsert</th>
 				      <th>Dato</th>
 				      <th>Tid</th>
 				      <th>Lys</th>
@@ -109,36 +116,42 @@
 				    </tr>
 				  </thead>
 				  <tbody>
+				  	<% for(var i=0; i<conc.length; i++) { 
+              			if(user.local.name == conc[i].arranger && conc[i].approvedByManager == true && conc[i].approvedByBookingSjef == true) {
+              		%>
 				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Death by Unga Bunga and the copters</td>
-				      <td>14.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine, Geir, Gunnar, Petter, Petrine, Ulrika, Satan</td>
+				      	<td><%= conc[i].artist %></td>
+				      	<td><%= conc[i].scene %></td>
+				      	<td><%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%></td>
+				      	<td><%=conc[i].start.slice(11)%></td>
+		                <td><% for(var k=0; k<conc[i].lights.length; k++) { %>
+		                   <%= conc[i].lights[k] %></br>
+		                <% } %>
+		                </td>
+		                <td><% for(var k=0; k<conc[i].sound.length; k++) { %>
+		                   <%= conc[i].sound[k] %></br>
+		                <% } %>
+		                </td>
+  				      	<td><% for(var k=0; k<conc[i].rig.length; k++) { %>
+                   			<%= conc[i].rig[k] %></br>
+                		<% } %>
+                		</td>
 					</tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>Highasakite</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine</td>
-				    </tr>
-				    <tr>
-				      <td>Dødens dal</td>
-				      <td>lalala</td>
-				      <td>15.09</td>
-				      <td>24:00</td>
-				      <td>Per</td>
-				      <td>Åge</td>
-				      <td>Josefine, Geir, Gunnar, Petter, Petrine, Ulrika, Satan</td>
-				    </tr>
+					<% }
+					} %>
 				  </tbody>
 				</table>
 			</div>
+			<% for(var i=0; i<conc.length; i++) { %>
+          <%if(conc[i].approvedByManager && user.local.name == conc[i].arranger) {%>
+          <div class="tab-pane" id="bandMentionID-<%= i %>" role="tabpanel"><b> Band: </b> <%= conc[i].artist %>  </br></br><b> Scene: </b> <%= conc[i].scene %>  </br></br><b> Dato:</b> <%= conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4) %>  </br></br><b>Sanger som skal bli spilt denne konserten:</b></br>
+          	<%if (conc[i].songs == undefined) {%>
+          		Manager har ikke lagt til sanger enda <%} else {%>
+          	<%= conc[i].songs %>
+          	<%}%>
+          </div>
+          <% }
+          } %>
 		</div>
 	</div>
 </div>
@@ -150,14 +163,12 @@
 
     <!-- /.container -->
 
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
+    <!-- Footer kan brukes senere -->
+    <footer class="py-3 bg-dark footer">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Schmuka 2017</p>
       </div>
-      <!-- /.container -->
     </footer>
-
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>

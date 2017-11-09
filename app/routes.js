@@ -1,53 +1,417 @@
+
+
+
 module.exports = function(app,passport){
+//get the template for concert. which is in /app/models/concert.js
+  let Concert = require('../app/models/concert');
+
+  let Band = require('../app/models/band');
+
+  let User = require('../app/models/user');
 
 
+//renders the index page
   app.get('/', function (req,res){
     res.render('index.ejs');
 
   });
+//flash messages to user based on which button is pressed
+  app.get('/book-flash', function(req,res){
+    req.flash('info', 'Du har nå sendt et bookingtilbud!');
+    res.redirect('/all');
+  })
 
+  app.get('/mention-flash', function(req,res){
+    req.flash('info', 'Omtale lagt til!');
+    res.redirect('/all');
+  })
+
+  app.get('/send-flash', function(req,res){
+    req.flash('info', 'Sendt!');
+    res.redirect('/all');
+  })
+  app.get('/decline-flash', function(req,res){
+    req.flash('info', 'Tilbud avslått!');
+    res.redirect('/all');
+  })
+
+  app.get('/approve-flash', function(req,res){
+    req.flash('info', 'Tilbud godkjent!');
+    res.redirect('/all');
+  })
+  app.get('/song-flash', function(req,res){
+    req.flash('info', 'Sanger oppdatert!');
+    res.redirect('/all');
+  })
+
+//renders login-in page
   app.get('/login', function(req, res){
     res.render('login.ejs', {message : req.flash('loginmessage' )});
   });
 
-  app.get('/tekniker', function(req, res){
-    res.render('tekniker.ejs', {message: req.flash('signupMessage')});
+  app.get('/all', isLoggedIn, function(req, res){
+
+    console.log(req.user.local.role);
+    //Get the user role from database which is in the req object that we get from express and passport
+    let role = req.user.local.role;
+    let ejs = ".ejs";
+    //Query for finding all concerts, further manipulation of data is done in EJS template.
+
+    if(role === 'tekniker' || role === 'arrangor'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('insert message here')
+                  });
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+
+    if(role === 'bookingAnsvarlig'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('info')
+                  });
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+
+    if(role === 'manager'){
+      Band.find(function(err,band){
+        if(err) console.log(err);
+        else{
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  band: band,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('info')
+                  });
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+
+    if(role === 'bookingSjef'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          User.find(function(err, users) {
+            if(err) console.log(err);
+            else{
+              Concert.find(function (err, conc){
+                //if theres an error, log it
+                if(err){
+                  console.log(err);
+                }
+                else {
+                //else, render correct page based on role, and send a list of every concert data over to EJS templates.
+                  res.render(role + ejs, {
+                  info: info,
+                  user: req.user,
+                  users: users,
+                  conc: conc,
+                  message: req.flash('info')
+                  });
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+
+
+    if(role === 'serveringsAnsvarlig'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          Concert.find(function(err, conc){
+            if(err) console.log(err);
+            else{
+              res.render(role + ejs, {
+                info: info,
+                user: req.user,
+                conc: conc,
+                message: req.flash('info')
+              });
+            }
+          })
+        }
+      })
+    }
+
+    if(role === 'PR'){
+      Band.find(function(err,info){
+        if(err) console.log(err);
+        else{
+          Concert.find(function(err,conc){
+            if(err) console.log(err);
+            else{
+              res.render(role + ejs,{
+                info: info,
+                user: req.user,
+                conc: conc,
+                message: req.flash('info')
+              });
+            }
+          })
+        }
+      })
+    }
+
+
+
+    /*
+    // render new page based on role
+    res.render(role + ejs, {
+      user : req.user, // get the user out of session and pass to template
+      message: req.flash('signupMessage')});
+*/
   });
 
-  app.get('/arrangor', function(req,res){
-    res.render('arrangor.ejs', {message: req.flash('arrangor')})
-  });
-
+//renders login page
   app.get('/signup', function(req,res){
     res.render('signup.ejs', {message: req.flash('signupMessage')});
   });
-
-
-  app.get('/profile', isLoggedIn,  function(req,res){
-    res.render('profile.ejs', {
-      user: req.user
+// logout function when "logout" is pressed
+  app.get('/logout',function(req,res){
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        }
+        else
+        {
+          console.log("Destroying session, " + req.body.email + " is logged out" )
+            res.redirect('/');
+        }
     });
-
   });
 
-  app.get('/logout', function (req,res){
-    res.logout();
-    res.redirect('/');
-
-  });
 
   app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/tekniker',
+    successRedirect: '/all',
     failureRedirect: '/signup',
     failureFlash: true
   }));
 
 
   app.post('/login', passport.authenticate('local-login',{
-    successRedirect: '/tekniker',
+    successRedirect: '/all',
     failureRedirect: '/login',
     failureFlash: true
-  }));
+  } ));
+
+  app.post('/manager', function(req,res){
+
+    Band.findOneAndUpdate(
+    { $and:  [{band: req.body.band}, {managerEpost: req.body.managerEpost}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      managerEpost: req.body.managerEpost,
+      band: req.body.band,
+      teknisk: req.body.teknisk,
+      sjanger: req.body.sjanger
+
+    },
+    {upsert: true, new: true, runValidators: true}, // options
+    function (err, doc) { // callback
+        if (err) {
+            res.redirect('/all');
+        } else {
+            res.redirect('/send-flash');
+        }
+    })
+  });
+
+  app.post('/bookingSjefApprove', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      approvedByBookingSjef: true
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/error');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/approve-flash');
+        }
+    })
+  });
+
+  app.post('/bookingSjefDecline', function(req,res){
+
+    Concert.deleteOne(
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/decline-flash');
+        }
+    })
+  });
+
+
+  app.post('/managerApprove', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      approvedByManager: true
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/approve-flash');
+        }
+    })
+  });
+
+  app.post('/managerDecline', function(req,res){
+
+    Concert.deleteOne(
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/decline-flash');
+        }
+    })
+  });
+
+
+  app.post('/bookingMention', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      mention: req.body.mention
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+
+            res.redirect('/mention-flash');
+        }
+    })
+  });
+
+  app.post('/addSongs', function(req,res){
+
+    Concert.update(
+    { $and:  [{artist: req.body.artistBooked}, {start: req.body.dateBooked}]}, // find a document with that filter or create a new, if nothing is found
+    {
+      songs: req.body.songs
+    },
+     // options
+    function (err, doc) { // callback
+        if (err) {
+            console.log(req.body.artistBooked);
+            res.redirect('/bullcrap');
+        } else {
+            console.log(req.body.artistBooked);
+            res.redirect('/song-flash');
+        }
+    })
+  });
+
+
+
+  app.post('/bookingAnsvarlig', function(req,res){
+    new Concert({
+      scene: req.body.scene,
+      artist: req.body.artist,
+      start: req.body.start,
+      end: req.body.end,
+      lights: req.body.lights,
+      sound: req.body.sound,
+      rig: req.body.rig,
+      arranger: req.body.arranger,
+      approvedByBookingSjef: false,
+      approvedByManager: false,
+      ticketPrice: req.body.ticketPrice,
+    }).save(function(err,doc){
+      if(err) {
+        res.redirect('/all');
+    }else{
+      res.redirect('/book-flash');
+    }
+
+    })
+  });
+
+
 
 
 };

@@ -10,11 +10,13 @@ let userSchema = mongoose.Schema({
       local :   {
 
         email : String,
-        password: String
+        password: String,
+        name : String,
+        role : String
 
       }
 
-    
+
 });
 
 

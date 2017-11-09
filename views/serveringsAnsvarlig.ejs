@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="schmukaLogoFavicon.png"/>
+
+    <title>Schmuka - Serveringsansvarlig</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href= "vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"><img src="schmukaLogoKnappTransparent.png" width=75px></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link"><%=user.local.name%>
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logg ut</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Jumbotron Header -->
+      <header class="jumbotron my-4">
+        <h1 class="display-3">Serveringsansvarlig</h1>
+        <p class="lead">Her finner du en oversikt over alle konserter, og forslag til innkjøp av varer til konsertene.</p>
+      </header>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Konsertoversikt</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="home" role="tabpanel">
+          <table class="table">
+          <thead>
+            <tr>
+              <th>Scene</th>
+              <th>Konsert</th>
+              <th>Sjanger</th>
+              <th>Starttidspunkt</th>
+              <th>Sluttidspunkt</th>
+              <th>Forventet publikumsantall</th>
+              <th>Innkjøpsberegning</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<conc.length; i++) {
+                if(conc[i].approvedByBookingSjef == true && conc[i].approvedByManager) {
+                  %>
+            <tr>
+                <td><%= conc[i].scene %></td>
+                <td><%= conc[i].artist %></td>
+                <% for(var j = 0; j<info.length; j++){
+                  if(conc[i].artist == info[j].band){
+                    if(info[j].sjanger == undefined) { %>
+                      <td>Ingen sjanger</td>
+                      <% } else { %>
+                    <td> <%= info[j].sjanger %> </td>
+                    <% } %>
+                <%  } %>
+              <%  } %>
+                <td><%=conc[i].start.slice(8,10)%>.<%=conc[i].start.slice(5,7)%>.<%=conc[i].start.slice(0,4)%><br><%=conc[i].start.slice(11)%></td>
+                <td><%=conc[i].end.slice(8,10)%>.<%=conc[i].end.slice(5,7)%>.<%=conc[i].end.slice(0,4)%><br><%=conc[i].end.slice(11)%></td>
+                <!-- T0D0 -->
+                <% if(conc[i].scene == "Dødens dal") { %>
+                  <td> 4000 </td>
+                <% } if(conc[i].scene == "Storsalen") { %>
+                  <td> 800 </td>
+                <% } if(conc[i].scene == "Knaus") { %>
+                    <td> 100 </td>
+
+                <% } if(conc[i].scene == "Klubben") { %>
+                      <td> 300 </td>
+                <% } %>
+
+                <td>
+                  <% if(conc[i].scene == "Dødens dal") { %>
+                    Øl: 8000 </br>
+                    Vin: 300 </br>
+                    Cava: 80 </br>
+                  <% } if(conc[i].scene == "Klubben") { %>
+                    Øl: 400 </br>
+                    Vin: 50 </br>
+                    Cava: 5 </br>
+                  <% } if(conc[i].scene == "Knaus") { %>
+                    Øl: 160 </br>
+                    Vin: 40 </br>
+                    Cava: 10 </br>
+                  <% } if(conc[i].scene == "Storsalen") { %>
+                    Øl: 1850 </br>
+                    Vin: 50 </br>
+                    <% } %>
+                </td>
+
+          </tr>
+          <% }
+          } %>
+          </tbody>
+        </table>
+        </div>
+      </div>
+  	</div>
+
+	</br>
+	</br>
+	</br>
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark footer">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Schmuka 2017</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/popper/popper.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+     <script src="https://cdn of underscore"></script>
+
+  </body>
+
+</html>
