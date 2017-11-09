@@ -7,7 +7,7 @@ Bookingansvarlig		magnus@schmuka.no	magnus
 Bookingansvarlig		ulrik@schmuka.no	ulrik
 Bookingsjef			jorgen@schmuka.no	jorgen
 HighasakiteOgLemaitreManager	sondre@schmuka.no	sondre
-WingsuitsManager		fredrik@schmuka.no	fredrik
+WingsuitsOgDødeligUlvManager	fredrik@schmuka.no	fredrik
 TurbonegerManager		hank@schmuka.no		hank
 BonIverManager			justin@schmuka.no	justin
 AstridSManager			astrid@schmuka.no	astrid
