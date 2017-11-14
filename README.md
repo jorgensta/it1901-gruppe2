@@ -45,4 +45,4 @@ The application is now running locally in your web browser. Visit it at localhos
 Usernames and passwords are found within ```brukere.txt```.
 
 ### Future development 
-Feel free to explore and improve our project. Its due date for the course was 
+Feel free to explore and improve our project. Its due date for the course was 9th November 2017.
